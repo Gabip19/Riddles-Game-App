@@ -31,6 +31,16 @@ public class User extends Entity<UUID> {
         setId(id);
     }
 
+    public User(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.noTokens = 0;
+        this.noBadges = 0;
+        setId(UUID.randomUUID());
+    }
+
     public String getFirstName() {
         return firstName;
     }
