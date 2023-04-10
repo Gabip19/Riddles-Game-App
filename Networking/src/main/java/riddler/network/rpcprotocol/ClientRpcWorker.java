@@ -3,6 +3,7 @@ package riddler.network.rpcprotocol;
 
 import riddler.domain.User;
 import riddler.domain.validator.exceptions.InvalidCredentialsException;
+import riddler.domain.validator.exceptions.UserValidationException;
 import riddler.network.dto.DTOUtils;
 import riddler.network.dto.UserDTO;
 import riddler.services.ClientObserver;
@@ -80,6 +81,9 @@ public class ClientRpcWorker implements Runnable, ClientObserver {
         if (request.type() == RequestType.LOGOUT) {
             return handleLogout(request);
         }
+        if (request.type() == RequestType.SIGN_UP) {
+            return handleSignUp(request);
+        }
         return null;
     }
 
@@ -123,6 +127,38 @@ public class ClientRpcWorker implements Runnable, ClientObserver {
         service.logout(user);
         connected = false;
         return OK_RESPONSE;
+    }
+
+    private Response handleSignUp(Request request) {
+        System.out.println("Sign up request ...");
+        UserDTO requestUserDTO = (UserDTO) request.data();
+        User user = DTOUtils.getFromDTO(requestUserDTO);
+
+        try {
+            User loggedUser = service.attemptSignUp(user, this);
+            UserDTO userDTO = DTOUtils.getDTO(loggedUser);
+
+            return new Response.Builder().type(ResponseType.OK).data(userDTO).build();
+
+        } catch (UserValidationException e) {
+            System.out.println("Date invalide la user.");
+            System.out.println(e.getMessage());
+            connected = false;
+
+            return new Response.Builder()
+                    .type(ResponseType.INVALID_USER_DATA)
+                    .data(e.getMessage())
+                    .build();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            connected = false;
+
+            return new Response.Builder()
+                    .type(ResponseType.ERROR)
+                    .data(e.getMessage())
+                    .build();
+        }
     }
 
     private void sendResponse(Response response) throws IOException {

@@ -3,6 +3,7 @@ package riddler.network.rpcprotocol;
 
 import riddler.domain.User;
 import riddler.domain.validator.exceptions.InvalidCredentialsException;
+import riddler.domain.validator.exceptions.UserValidationException;
 import riddler.network.dto.DTOUtils;
 import riddler.network.dto.UserDTO;
 import riddler.services.ClientObserver;
@@ -136,6 +137,36 @@ public class ServicesRpcProxy implements Services {
             String err = response.data().toString();
             throw new RuntimeException(err);
         }
+    }
+
+    @Override
+    public User attemptSignUp(User user, ClientObserver client) {
+        initializeConnection();
+        UserDTO userDTO = DTOUtils.getDTO(user);
+        Request signupRequest = new Request.Builder()
+                .type(RequestType.SIGN_UP)
+                .data(userDTO)
+                .build();
+        sendRequest(signupRequest);
+
+        Response response = readResponse();
+
+        if (response.type() == ResponseType.OK) {
+            this.client = client;
+            return DTOUtils.getFromDTO((UserDTO) response.data());
+
+        } else if (response.type() == ResponseType.INVALID_USER_DATA) {
+            closeConnection();
+            String err = response.data().toString();
+            throw new UserValidationException(err);
+
+        } else if (response.type() == ResponseType.ERROR) {
+            closeConnection();
+            String err = response.data().toString();
+            throw new RuntimeException(err);
+        }
+
+        return null;
     }
 
     private boolean isUpdate(Response response) {

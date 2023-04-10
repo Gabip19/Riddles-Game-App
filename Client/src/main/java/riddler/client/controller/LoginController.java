@@ -92,6 +92,8 @@ public class LoginController {
 
         SignUpController controller = signupLoader.getController();
         controller.setService(srv);
+        controller.setMainController(mainController);
+        controller.setMainWindowRoot(mainWindowRoot);
         controller.setLoginController(this);
         controller.setLoginWindowRoot(emailField.getScene().getRoot());
 

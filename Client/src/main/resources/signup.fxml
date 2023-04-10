@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="riddler.client.controller.SignUpController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="riddler.client.controller.SignUpController">
     <VBox alignment="CENTER" layoutX="250.0" layoutY="79.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <Label text="SIGN IN">
+        <Label text="SIGN UP">
             <font>
                 <Font name="Consolas" size="30.0" />
             </font>
@@ -24,30 +24,30 @@
         <HBox alignment="CENTER" fillHeight="false" prefHeight="40.0" prefWidth="600.0">
             <Label prefHeight="27.0" prefWidth="100.0" text="First name:" textOverrun="CLIP" HBox.hgrow="NEVER">
                 <font>
-                    <Font size="18.0"/>
+                    <Font size="18.0" />
                 </font>
                 <HBox.margin>
-                    <Insets right="15.0"/>
+                    <Insets right="15.0" />
                 </HBox.margin>
             </Label>
             <TextField fx:id="firstNameField" prefWidth="230.0" HBox.hgrow="NEVER">
                 <font>
-                    <Font size="14.0"/>
+                    <Font size="14.0" />
                 </font>
             </TextField>
         </HBox>
         <HBox alignment="CENTER" fillHeight="false" prefHeight="40.0" prefWidth="600.0">
             <Label prefHeight="27.0" prefWidth="100.0" text="Last name:" textOverrun="CLIP" HBox.hgrow="NEVER">
                 <font>
-                    <Font size="18.0"/>
+                    <Font size="18.0" />
                 </font>
                 <HBox.margin>
-                    <Insets right="15.0"/>
+                    <Insets right="15.0" />
                 </HBox.margin>
             </Label>
             <TextField fx:id="lastNameField" prefWidth="230.0" HBox.hgrow="NEVER">
                 <font>
-                    <Font size="14.0"/>
+                    <Font size="14.0" />
                 </font>
             </TextField>
         </HBox>
@@ -81,9 +81,14 @@
                 </font>
             </PasswordField>
         </HBox>
+        <Label fx:id="errorLabel" alignment="CENTER" prefHeight="17.0" prefWidth="254.0" textFill="RED" wrapText="true" VBox.vgrow="ALWAYS">
+            <VBox.margin>
+                <Insets bottom="10.0" top="10.0" />
+            </VBox.margin>
+        </Label>
         <Button fx:id="signUnBtn" mnemonicParsing="false" text="Sign in">
             <VBox.margin>
-                <Insets top="40.0" />
+                <Insets top="10.0" />
             </VBox.margin>
             <font>
                 <Font size="14.0" />

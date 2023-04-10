@@ -1,5 +1,6 @@
 package riddler.server;
 
+import riddler.domain.validator.exceptions.UserValidator;
 import riddler.network.server.AbstractServer;
 import riddler.network.server.RpcConcurrentServer;
 import riddler.repository.UserRepository;
@@ -57,7 +58,8 @@ public class RpcServerStarter {
         UserRepository userRepo = new UserDBRepository(props);
 
         return new ConcreteService(
-                userRepo
+                userRepo,
+                new UserValidator()
         );
     }
 }
