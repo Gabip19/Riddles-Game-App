@@ -7,10 +7,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import riddler.domain.User;
 import riddler.domain.validator.exceptions.UserValidationException;
-import riddler.services.Services;
 
 
-public class SignUpController {
+public class SignUpController extends GuiController {
     public TextField firstNameField;
     public TextField lastNameField;
     public TextField emailField;
@@ -19,16 +18,10 @@ public class SignUpController {
     public Hyperlink switchToLoginBtn;
     public Label errorLabel;
 
-    private Services srv;
     private Parent loginWindowRoot;
     private Parent mainWindowRoot;
-    private LoginController loginController;
     private MainWindowController mainController;
-    private User currentUser = null;
 
-    public void setService(Services srv) {
-        this.srv = srv;
-    }
 
     public void setLoginWindowRoot(Parent loginWindowRoot) {
         this.loginWindowRoot = loginWindowRoot;
@@ -42,9 +35,6 @@ public class SignUpController {
         this.mainWindowRoot = mainWindowRoot;
     }
 
-    public void setLoginController(LoginController loginController) {
-        this.loginController = loginController;
-    }
 
     public void initialize() {
         signUnBtn.setOnAction(param -> signUp());
@@ -93,11 +83,8 @@ public class SignUpController {
     private void openMainStage() {
         Scene scene = new Scene(mainWindowRoot);
 
-        mainController.setService(srv);
-        mainController.setLoginController(loginController);
         mainController.setLoginWindowRoot(loginWindowRoot);
         mainController.load();
-        mainController.setCurrentUser(currentUser);
 
         Stage stage = new Stage();
         stage.setOnCloseRequest(param -> {

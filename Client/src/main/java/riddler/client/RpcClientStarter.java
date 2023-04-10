@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import riddler.client.controller.GuiController;
 import riddler.client.controller.LoginController;
 import riddler.client.controller.MainWindowController;
 import riddler.network.rpcprotocol.ServicesRpcProxy;
@@ -21,6 +22,7 @@ public class RpcClientStarter extends Application {
     public void start(Stage stage) throws IOException {
         Properties props = readProperties();
         Services service = createProxy(props);
+        GuiController.setSrv(service);
 
         FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/login.fxml"));
         Scene loginScene = new Scene(loginLoader.load());
@@ -30,7 +32,6 @@ public class RpcClientStarter extends Application {
         Parent mainWindowRoot = mainWindowLoader.load();
         MainWindowController mainWindowController = mainWindowLoader.getController();
 
-        loginController.setService(service);
         loginController.setMainController(mainWindowController);
         loginController.setMainWindowRoot(mainWindowRoot);
 

@@ -106,4 +106,20 @@ public class User extends Entity<UUID> {
     public void setNoBadges(int noBadges) {
         this.noBadges = noBadges;
     }
+
+    public void addBadges(int noBadges) {
+        this.noBadges += noBadges;
+    }
+
+    public void removeBadges(int noBadges) {
+        this.noBadges -= noBadges;
+    }
+
+    public void addTokens(int noTokens) {
+        this.noTokens += noTokens;
+    }
+
+    public void removeTokens(int noTokens) {
+        this.noTokens -= noTokens;
+    }
 }

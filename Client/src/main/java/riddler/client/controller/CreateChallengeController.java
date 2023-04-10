@@ -4,11 +4,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import riddler.domain.Challenge;
-import riddler.domain.User;
 import riddler.domain.validator.exceptions.ChallengeValidationException;
-import riddler.services.Services;
 
-public class CreateChallengeController {
+public class CreateChallengeController extends GuiController {
 
     public TextField titleField;
     public TextArea challengeTextField;
@@ -18,16 +16,7 @@ public class CreateChallengeController {
     public TextField tokensPoolField;
     public TextField tokensPrizeField;
     public Button addChallengeBtn;
-    private Services srv;
-    private User currentUser;
 
-    public void setSrv(Services srv) {
-        this.srv = srv;
-    }
-
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
-    }
 
     public void initialize() {
         addChallengeBtn.setOnAction(param -> addChallenge());

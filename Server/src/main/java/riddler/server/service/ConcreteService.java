@@ -125,6 +125,12 @@ public class ConcreteService implements Services {
     @Override
     public void addChallenge(Challenge challenge) {
         challengeValidator.validate(challenge);
+
+        User challengeOwner = challenge.getAuthor();
+        challengeOwner.removeBadges(challenge.getBadgesPrizePool());
+        challengeOwner.removeTokens(challenge.getTokensPrizePool());
+
+        userRepo.update(challengeOwner, challengeOwner.getId());
         challengeRepo.add(challenge);
     }
 

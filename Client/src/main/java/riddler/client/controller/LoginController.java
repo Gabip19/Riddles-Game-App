@@ -12,12 +12,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import riddler.domain.User;
 import riddler.domain.validator.exceptions.InvalidCredentialsException;
-import riddler.services.Services;
 
 import java.io.IOException;
 
 
-public class LoginController {
+public class LoginController extends GuiController {
     @FXML
     public TextField emailField;
     @FXML
@@ -27,11 +26,9 @@ public class LoginController {
     @FXML
     public Hyperlink switchToSignUpBtn;
 
-    private Services srv;
     private Parent mainWindowRoot;
     private MainWindowController mainController;
 
-    private User currentUser = null;
 
     public void setMainWindowRoot(Parent mainWindowRoot) {
         this.mainWindowRoot = mainWindowRoot;
@@ -41,13 +38,6 @@ public class LoginController {
         this.mainController = mainController;
     }
 
-    public void setService(Services service) {
-        this.srv = service;
-    }
-
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
-    }
 
     public void initialize() {
         loginBtn.setOnAction(param -> login());
@@ -91,10 +81,8 @@ public class LoginController {
         }
 
         SignUpController controller = signupLoader.getController();
-        controller.setService(srv);
         controller.setMainController(mainController);
         controller.setMainWindowRoot(mainWindowRoot);
-        controller.setLoginController(this);
         controller.setLoginWindowRoot(emailField.getScene().getRoot());
 
         var currentStage = (Stage) emailField.getScene().getWindow();
@@ -112,16 +100,11 @@ public class LoginController {
     private void openMainStage() {
         Scene scene = new Scene(mainWindowRoot);
 
-        mainController.setService(srv);
-        mainController.setLoginController(this);
         mainController.setLoginWindowRoot(emailField.getScene().getRoot());
-        mainController.setCurrentUser(currentUser);
         mainController.load();
 
         Stage stage = new Stage();
-        stage.setOnCloseRequest(param -> {
-            mainController.logout();
-        });
+        stage.setOnCloseRequest(param -> mainController.logout());
 
         stage.setTitle("Teledon Menu");
         stage.setScene(scene);

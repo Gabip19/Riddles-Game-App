@@ -12,12 +12,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import riddler.domain.User;
 import riddler.services.ClientObserver;
-import riddler.services.Services;
 
 import java.io.IOException;
 
 
-public class MainWindowController implements ClientObserver {
+public class MainWindowController extends GuiController implements ClientObserver {
     @FXML
     public Button logOutBtn;
     @FXML
@@ -31,28 +30,11 @@ public class MainWindowController implements ClientObserver {
     private final ObservableList<User> topUsers = FXCollections.observableArrayList();
 
     private Parent homeRoot = null;
-
-    private Services srv;
     private Parent loginWindowRoot;
-    private LoginController loginController;
 
-    private User currentUser = null;
 
     public void setLoginWindowRoot(Parent loginWindowRoot) {
         this.loginWindowRoot = loginWindowRoot;
-    }
-
-    public void setLoginController(LoginController loginController) {
-        this.loginController = loginController;
-    }
-
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
-    }
-
-    public void setService(Services service) {
-        this.srv = service;
-        topUsers.setAll(srv.getTopUsers(50));
     }
 
     public void initialize() {
@@ -68,6 +50,7 @@ public class MainWindowController implements ClientObserver {
     }
 
     public void load() {
+        topUsers.setAll(srv.getTopUsers(50));
         loadHomePane();
         mainBorderPane.setCenter(homeRoot);
     }
@@ -79,9 +62,6 @@ public class MainWindowController implements ClientObserver {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        HomePaneController controller = homePaneLoader.getController();
-        controller.setSrv(srv);
-        controller.setCurrentUser(currentUser);
     }
 
     private void getRiddle() {
@@ -104,7 +84,6 @@ public class MainWindowController implements ClientObserver {
         System.out.println("Incearca sa schimbe.");
         Scene scene = new Scene(loginWindowRoot);
 
-        loginController.setCurrentUser(null);
         System.out.println("A schimbat scena");
         Stage stage = new Stage();
         stage.setTitle("Teledon Login");
