@@ -1,7 +1,9 @@
 package riddler.network.rpcprotocol;
 
 
+import riddler.domain.Challenge;
 import riddler.domain.User;
+import riddler.domain.validator.exceptions.ChallengeValidationException;
 import riddler.domain.validator.exceptions.InvalidCredentialsException;
 import riddler.domain.validator.exceptions.UserValidationException;
 import riddler.network.dto.DTOUtils;
@@ -13,6 +15,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -169,6 +173,62 @@ public class ServicesRpcProxy implements Services {
         return null;
     }
 
+    @Override
+    public ArrayList<User> getTopUsers(int topNumber) {
+        Request getTopRequest = new Request.Builder()
+                .type(RequestType.GET_TOP_USERS)
+                .data(topNumber)
+                .build();
+        sendRequest(getTopRequest);
+
+        Response response = readResponse();
+
+        if (response.type() == ResponseType.GET_TOP_USERS) {
+            UserDTO[] userDTOS = (UserDTO[]) response.data();
+            User[] users = DTOUtils.getFromDTO(userDTOS);
+            return new ArrayList<>(List.of(users));
+        } else if (response.type() == ResponseType.ERROR) {
+            String err = response.data().toString();
+            throw new RuntimeException(err);
+        }
+
+        return new ArrayList<>();
+    }
+
+    @Override
+    public void getRiddle() {
+        Request riddleRequest = new Request.Builder().type(RequestType.GET_RIDDLE).build();
+        sendRequest(riddleRequest);
+
+        Response response = readResponse();
+        if (response.type() == ResponseType.ERROR) {
+            String err = response.data().toString();
+            throw new RuntimeException(err);
+        }
+    }
+
+    @Override
+    public void addChallenge(Challenge challenge) {
+        Request addRequest = new Request.Builder()
+                .type(RequestType.ADD_CHALLENGE)
+                .data(challenge)
+                .build();
+        sendRequest(addRequest);
+
+        Response response = readResponse();
+
+        if (response.type() == ResponseType.OK) {
+            System.out.println("Added a challenge.");
+        } else if (response.type() == ResponseType.INVALID_CHALLENGE_DATA) {
+            String err = response.data().toString();
+            throw new ChallengeValidationException(err);
+        } else if (response.type() == ResponseType.ERROR) {
+            closeConnection();
+            String err = response.data().toString();
+            throw new RuntimeException(err);
+        }
+    }
+
     private boolean isUpdate(Response response) {
         return false;
     }
@@ -183,6 +243,10 @@ public class ServicesRpcProxy implements Services {
                 try {
                     Response response = (Response) inputStream.readObject();
                     System.out.println("Received a response " + response.type());
+
+                    if (response.type() == ResponseType.LOGOUT) {
+                        connected = false;
+                    }
 
                     if (isUpdate(response)) {
                         handleUpdate(response);

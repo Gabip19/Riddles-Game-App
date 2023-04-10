@@ -116,6 +116,7 @@ public class LoginController {
         mainController.setLoginController(this);
         mainController.setLoginWindowRoot(emailField.getScene().getRoot());
         mainController.setCurrentUser(currentUser);
+        mainController.load();
 
         Stage stage = new Stage();
         stage.setOnCloseRequest(param -> {

@@ -1,10 +1,16 @@
 package riddler.services;
 
 
+import riddler.domain.Challenge;
 import riddler.domain.User;
+
+import java.util.ArrayList;
 
 public interface Services {
     User attemptLogin(User user, ClientObserver client);
     void logout(User user);
     User attemptSignUp(User user, ClientObserver client);
+    ArrayList<User> getTopUsers(int topNumber);
+    void getRiddle();
+    void addChallenge(Challenge challenge);
 }

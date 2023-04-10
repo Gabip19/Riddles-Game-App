@@ -29,4 +29,20 @@ public class DTOUtils {
         return new UserDTO(id, firstName, lastName, email, password, noTokens, noBadges);
     }
 
+    public static User[] getFromDTO(UserDTO[] userDTOS) {
+        User[] users = new User[userDTOS.length];
+        for(int i = 0; i < userDTOS.length; i++) {
+            users[i] = getFromDTO(userDTOS[i]);
+        }
+        return users;
+    }
+
+    public static UserDTO[] getDTO(User[] users) {
+        UserDTO[] userDTOS = new UserDTO[users.length];
+        for(int i = 0; i < users.length; i++) {
+            userDTOS[i] = getDTO(users[i]);
+        }
+        return userDTOS;
+    }
+
 }

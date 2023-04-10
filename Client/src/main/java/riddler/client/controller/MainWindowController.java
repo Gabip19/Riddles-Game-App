@@ -1,22 +1,36 @@
 package riddler.client.controller;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import riddler.domain.User;
 import riddler.services.ClientObserver;
 import riddler.services.Services;
 
+import java.io.IOException;
+
 
 public class MainWindowController implements ClientObserver {
     @FXML
-    public Button logoutBtn;
+    public Button logOutBtn;
+    @FXML
+    public Button getRiddleBtn;
+    @FXML
+    public BorderPane mainBorderPane;
+    @FXML
+    public Button homeBtn;
+    @FXML
+    public ListView<User> topUsersListView;
+    private final ObservableList<User> topUsers = FXCollections.observableArrayList();
+
+    private Parent homeRoot = null;
 
     private Services srv;
     private Parent loginWindowRoot;
@@ -38,10 +52,40 @@ public class MainWindowController implements ClientObserver {
 
     public void setService(Services service) {
         this.srv = service;
+        topUsers.setAll(srv.getTopUsers(50));
     }
 
     public void initialize() {
-        logoutBtn.setOnAction(param -> logout());
+        logOutBtn.setOnAction(param -> logout());
+        getRiddleBtn.setOnAction(param -> getRiddle());
+        homeBtn.setOnAction(param -> showHomePane());
+
+        topUsersListView.setItems(topUsers);
+    }
+
+    private void showHomePane() {
+        mainBorderPane.setCenter(homeRoot);
+    }
+
+    public void load() {
+        loadHomePane();
+        mainBorderPane.setCenter(homeRoot);
+    }
+
+    private void loadHomePane() {
+        FXMLLoader homePaneLoader = new FXMLLoader(getClass().getResource("/home-pane.fxml"));
+        try {
+            homeRoot = homePaneLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        HomePaneController controller = homePaneLoader.getController();
+        controller.setSrv(srv);
+        controller.setCurrentUser(currentUser);
+    }
+
+    private void getRiddle() {
+        srv.getRiddle();
     }
 
     void logout() {
@@ -51,7 +95,7 @@ public class MainWindowController implements ClientObserver {
     }
 
     private void closeStage() {
-        var currentStage = (Stage) logoutBtn.getScene().getWindow();
+        var currentStage = (Stage) logOutBtn.getScene().getWindow();
         currentStage.getScene().setRoot(new AnchorPane());
         currentStage.close();
     }

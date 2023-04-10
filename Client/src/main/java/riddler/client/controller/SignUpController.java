@@ -96,6 +96,7 @@ public class SignUpController {
         mainController.setService(srv);
         mainController.setLoginController(loginController);
         mainController.setLoginWindowRoot(loginWindowRoot);
+        mainController.load();
         mainController.setCurrentUser(currentUser);
 
         Stage stage = new Stage();

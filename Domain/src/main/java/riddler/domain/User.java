@@ -75,7 +75,7 @@ public class User extends Entity<UUID> {
 
     @Override
     public String toString() {
-        return "Volunteer{ " +  firstName + " " + lastName + " " + email + " " + password + " " + " }";
+        return firstName + " " + lastName + " " + noBadges + " " + noTokens;
     }
 
     @Override

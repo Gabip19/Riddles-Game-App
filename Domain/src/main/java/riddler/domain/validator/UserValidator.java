@@ -1,7 +1,8 @@
-package riddler.domain.validator.exceptions;
+package riddler.domain.validator;
 
 import riddler.domain.User;
 import riddler.domain.validator.Validator;
+import riddler.domain.validator.exceptions.UserValidationException;
 
 
 public class UserValidator implements Validator<User> {
