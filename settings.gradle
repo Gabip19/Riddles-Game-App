@@ -1,4 +1,6 @@
 rootProject.name = 'RiddlesApp'
 include 'Domain'
 include 'Repository'
+include 'Services'
+include 'Networking'
 
