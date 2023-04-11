@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<HBox fx:id="root" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="360.0" styleClass="hbox-root" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <stylesheets>
+      <URL value="@style/top-user-cell.css" />
+   </stylesheets>
+   <Label fx:id="rankLabel" maxHeight="-Infinity" maxWidth="-Infinity" styleClass="text-info" text="#333" HBox.hgrow="NEVER">
+      <HBox.margin>
+         <Insets left="10.0" />
+      </HBox.margin></Label>
+   <Label fx:id="nameLabel" maxWidth="155.0" styleClass="text-info" text="Nume + Prenume" HBox.hgrow="ALWAYS">
+      <HBox.margin>
+         <Insets left="15.0" />
+      </HBox.margin>
+   </Label>
+   <Label fx:id="badgesLabel" graphicTextGap="7.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="20.0" prefWidth="50.0" styleClass="text-info" text="333" HBox.hgrow="NEVER">
+      <HBox.margin>
+         <Insets left="15.0" />
+      </HBox.margin>
+      <graphic>
+         <FontIcon iconColor="WHITE" iconLiteral="fas-medal" styleClass="top-icon" />
+      </graphic>
+   </Label>
+   <Label fx:id="tokensLabel" graphicTextGap="7.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="14.0" prefWidth="58.0" styleClass="text-info" text="3333" HBox.hgrow="NEVER">
+      <HBox.margin>
+         <Insets left="10.0" right="10.0" />
+      </HBox.margin>
+      <graphic>
+         <FontIcon iconColor="WHITE" iconLiteral="fab-bandcamp" styleClass="top-icon" />
+      </graphic>
+   </Label>
+   <padding>
+      <Insets left="10.0" right="10.0" />
+   </padding>
+</HBox>

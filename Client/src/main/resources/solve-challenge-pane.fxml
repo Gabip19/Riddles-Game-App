@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <AnchorPane prefHeight="651.0" prefWidth="825.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="riddler.client.controller.SolveChallengeController">
     <stylesheets>
@@ -21,7 +22,7 @@
                     <Font size="50.0" />
                 </font>
                 <HBox.margin>
-                    <Insets bottom="5.0" left="40.0" right="40.0" top="100.0" />
+                    <Insets bottom="5.0" left="40.0" right="40.0" top="60.0" />
                 </HBox.margin>
             </Label>
         </HBox>
@@ -29,7 +30,7 @@
             <VBox.margin>
                 <Insets left="40.0" right="40.0" />
             </VBox.margin>
-            <Label fx:id="authorLabel" styleClass="author" text="by The Internet">
+            <Label fx:id="authorLabel" styleClass="info-label" text="by The Internet">
                 <font>
                     <Font size="14.0" />
                 </font>
@@ -37,14 +38,44 @@
                <Insets left="5.0" />
             </padding>
             </Label>
+         <Label graphicTextGap="7.0" styleClass="info-label" text="3">
+            <font>
+               <Font size="14.0" />
+            </font>
+            <HBox.margin>
+               <Insets left="30.0" />
+            </HBox.margin>
+            <graphic>
+               <FontIcon iconColor="#ffc100" iconLiteral="fas-medal" styleClass="top-icon" />
+            </graphic>
+         </Label>
+         <Label graphicTextGap="7.0" styleClass="info-label" text="500">
+            <HBox.margin>
+               <Insets left="30.0" />
+            </HBox.margin>
+            <graphic>
+               <FontIcon iconColor="#ffc200" iconLiteral="fab-bandcamp" styleClass="top-icon" />
+            </graphic>
+         </Label>
         </HBox>
+      <Label fx:id="resultLabel" styleClass="result-label" text="Wrong" textFill="WHITE">
+         <VBox.margin>
+            <Insets top="30.0" />
+         </VBox.margin>
+      </Label>
         <Label fx:id="textLabel" maxWidth="1.7976931348623157E308" styleClass="text-label" text="Label askldj flaskjd lfaasf asd asd fasd fasd fasdfasd fasd fasd fasdfasdfasdf sad asd fas dfa sd asdf" wrapText="true" VBox.vgrow="ALWAYS">
          <VBox.margin>
-            <Insets bottom="60.0" left="40.0" right="40.0" top="50.0" />
+            <Insets bottom="30.0" left="40.0" right="40.0" top="20.0" />
          </VBox.margin>
          <padding>
             <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
-         </padding></Label>
+         </padding>
+      </Label>
+      <Label text="Attempts left: 5" textFill="WHITE">
+         <VBox.margin>
+            <Insets bottom="20.0" />
+         </VBox.margin>
+      </Label>
         <TextField fx:id="answerField" promptText="Type your answer here..." styleClass="answer">
          <VBox.margin>
             <Insets bottom="50.0" left="70.0" right="70.0" />
@@ -58,7 +89,10 @@
          </font>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding></Button>
+         </padding>
+         <VBox.margin>
+            <Insets bottom="16.0" />
+         </VBox.margin></Button>
     </VBox>
    <padding>
       <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

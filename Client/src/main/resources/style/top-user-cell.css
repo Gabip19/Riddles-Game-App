@@ -1,0 +1,18 @@
+@font-face {
+    src: url("fonts/GothamBold.ttf");
+}
+
+.hbox-root {
+    -fx-background-color: #121212;
+    -fx-background-radius: 10px;
+}
+
+.text-info {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-family: Gotham;
+}
+
+.top-icon {
+    -fx-icon-color: #ffc200;
+}

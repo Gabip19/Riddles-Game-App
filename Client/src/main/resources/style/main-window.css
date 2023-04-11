@@ -1,0 +1,18 @@
+@font-face {
+    src: url("fonts/GothamBold.ttf");
+}
+
+.root {
+    -fx-background-color: black;
+}
+
+.right-vbox {
+    -fx-background-color: rgba(37,36,41,1);
+    -fx-background-radius: 10px;
+}
+
+.top-title {
+    -fx-text-fill: white;
+    -fx-font-size: 25px;
+    -fx-font-family: Gotham;
+}

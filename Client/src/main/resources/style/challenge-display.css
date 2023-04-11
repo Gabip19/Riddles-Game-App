@@ -17,9 +17,18 @@
     -fx-text-fill: white;
 }
 
-.author {
+.info-label {
     -fx-font-size: 20px;
     -fx-text-fill: #c2c3c9;
+}
+
+.result-label {
+    -fx-font-size: 35px;
+    -fx-text-fill: red;
+}
+
+.top-icon {
+    -fx-icon-color: #ffc200;
 }
 
 .text-label {

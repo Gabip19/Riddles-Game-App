@@ -17,6 +17,7 @@ public class SolveChallengeController extends GuiController {
     public Label textLabel;
     public TextField answerField;
     public Button submitBtn;
+    public Label resultLabel;
 
     private Challenge challenge;
 
@@ -32,6 +33,7 @@ public class SolveChallengeController extends GuiController {
     public void load(Challenge challenge) {
         titleLabel.setText(challenge.getTitle());
         textLabel.setText(challenge.getText());
+        resultLabel.setVisible(false);
         User author = challenge.getAuthor();
         if (author != null) {
             authorLabel.setText(author.getFirstName() + " " + author.getLastName());
@@ -39,6 +41,10 @@ public class SolveChallengeController extends GuiController {
     }
 
     private void submit() {
+        if (answerField.getText().isBlank()) {
+            return;
+        }
+
         Submission submission = new Submission(
                 challenge,
                 currentUser,
@@ -48,9 +54,13 @@ public class SolveChallengeController extends GuiController {
 
         try {
             srv.sendSubmission(submission);
-            System.out.println("!!!!! CORECT !!!!!");
+            resultLabel.setText("Correct");
+            resultLabel.setStyle("-fx-text-fill: #3eea3e");
+            resultLabel.setVisible(true);
         } catch (InvalidSubmissionAnswerException e) {
-            System.out.println("!!!!! GRESIT !!!!! " + e.getMessage());
+            resultLabel.setText("Wrong");
+            resultLabel.setStyle("-fx-text-fill: red");
+            resultLabel.setVisible(true);
         } catch (NoAttemptsLeftException e) {
             System.out.println("!!!!! NU MAI AI INCERCARI !!!!! " + e.getMessage());
         }

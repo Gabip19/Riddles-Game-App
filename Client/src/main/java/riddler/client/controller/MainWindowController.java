@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import riddler.client.gui.TopUsersListCell;
 import riddler.domain.User;
 import riddler.services.ClientObserver;
 
@@ -42,6 +43,11 @@ public class MainWindowController extends GuiController implements ClientObserve
         getRiddleBtn.setOnAction(param -> getRiddle());
         homeBtn.setOnAction(param -> showHomePane());
 
+        initializeTopUsersListView();
+    }
+
+    private void initializeTopUsersListView() {
+        topUsersListView.setCellFactory(param -> new TopUsersListCell());
         topUsersListView.setItems(topUsers);
     }
 
