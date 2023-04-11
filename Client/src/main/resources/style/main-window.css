@@ -14,5 +14,5 @@
 .top-title {
     -fx-text-fill: white;
     -fx-font-size: 25px;
-    -fx-font-family: Gotham;
+    -fx-font-family: Gotham, sans-serif;
 }

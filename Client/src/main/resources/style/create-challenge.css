@@ -1,4 +1,5 @@
 @font-face {
+    src: url("fonts/GothamBold.ttf");
     src: url("fonts/Montserrat-Regular.ttf");
 }
 
@@ -7,52 +8,44 @@
 }
 
 .root {
-    -fx-font-family: Montserrat, sans-serif;
+    -fx-font-family: Gotham;
     -fx-background-color: linear-gradient(to top, rgba(37,36,41,1) 20%, rgba(91,91,107,1) 80%, rgb(97, 166, 100) 100%);
     -fx-background-radius: 30;
 }
 
-.title {
-    -fx-font-size: 45px;
+.text-field, .text-field .content {
+    -fx-background-color: rgb(66, 66, 72);
+    -fx-text-fill: white;
+    -fx-font-size: 17px;
+    -fx-font-family: Montserrat;
+}
+
+.text-info {
+    -fx-font-size: 20px;
     -fx-text-fill: white;
 }
 
-.info-label {
-    -fx-font-size: 20px;
-    -fx-text-fill: #c2c3c9;
-}
-
-.result-label {
-    -fx-font-size: 35px;
-    -fx-text-fill: red;
-}
-
-.top-icon {
-    -fx-icon-color: #ffc200;
-}
-
-.text-label {
-    -fx-background-color: #2b2f34;
-    -fx-font-size: 20px;
-    -fx-background-radius: 30;
-    -fx-text-fill: white;
-    -fx-effect: dropshadow(three-pass-box, rgba(105, 148, 107, 0.3), 30, 0.5, 0, 0);
-}
-
-.answer {
+.input-field {
     -fx-background-color: rgb(0, 0, 0, 0);
-    -fx-font-size: 20px;
+    -fx-font-family: Montserrat, sans-serif;
+    -fx-font-size: 17px;
     -fx-text-fill: white;
     -fx-border-style: hidden hidden solid hidden;
     -fx-border-color: rgba(105, 148, 107, 1);
 }
 
-.submit-btn {
-    -fx-font-size: 20px;
+.launch-btn {
+    -fx-font-size: 17px;
     -fx-text-fill: white;
     -fx-background-color: rgb(56, 171, 59);
     -fx-background-radius: 10px;
     /*-fx-border-style: solid;*/
     /*-fx-border-radius: 10px;*/
     /*-fx-border-width: 5px;*/
+}
+
+.error-label {
+    -fx-text-fill: red;
+    -fx-font-family: Montserrat, sans-serif;
+    -fx-font-size: 15px;
 }

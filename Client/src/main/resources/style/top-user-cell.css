@@ -10,7 +10,7 @@
 .text-info {
     -fx-text-fill: white;
     -fx-font-size: 14px;
-    -fx-font-family: Gotham;
+    -fx-font-family: Gotham, sans-serif;
 }
 
 .top-icon {

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
@@ -7,41 +9,136 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="515.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="riddler.client.controller.CreateChallengeController">
-   <VBox layoutX="250.0" layoutY="100.0" prefHeight="504.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
-         AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <HBox alignment="CENTER" prefHeight="75.0" prefWidth="600.0">
-         <Label text="Titlu"/>
-         <TextField fx:id="titleField"/>
+<AnchorPane prefHeight="651.0" prefWidth="825.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="riddler.client.controller.CreateChallengeController">
+   <stylesheets>
+      <URL value="@style/create-challenge.css" />
+   </stylesheets>
+   <VBox alignment="TOP_CENTER" layoutX="250.0" layoutY="100.0" prefHeight="504.0" prefWidth="600.0" styleClass="root" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER_LEFT" spacing="10.0">
+         <VBox.margin>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="70.0" />
+         </VBox.margin>
+         <Label maxWidth="1.7976931348623157E308" styleClass="text-info" text="Titlu">
+            <padding>
+               <Insets left="47.0" />
+            </padding>
+         </Label>
+         <TextField fx:id="titleField" maxWidth="1.7976931348623157E308" promptText="Type here..." styleClass="input-field">
+            <VBox.margin>
+               <Insets left="45.0" right="45.0" />
+            </VBox.margin>
+         </TextField>
+      </VBox>
+      <VBox spacing="10.0">
+         <VBox.margin>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="5.0" />
+         </VBox.margin>
+         <Label maxWidth="1.7976931348623157E308" styleClass="text-info" text="Text">
+            <padding>
+               <Insets left="47.0" />
+            </padding>
+         </Label>
+         <TextArea fx:id="challengeTextField" maxWidth="1.7976931348623157E308" prefHeight="91.0" prefWidth="825.0" promptText="Type here..." styleClass="text-field" wrapText="true">
+            <VBox.margin>
+               <Insets left="45.0" right="45.0" />
+            </VBox.margin>
+         </TextArea>
+      </VBox>
+      <VBox spacing="10.0">
+         <VBox.margin>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="5.0" />
+         </VBox.margin>
+         <Label maxWidth="1.7976931348623157E308" styleClass="text-info" text="Answer">
+            <padding>
+               <Insets left="47.0" />
+            </padding>
+         </Label>
+         <TextField fx:id="answerField" maxWidth="1.7976931348623157E308" promptText="Type here..." styleClass="input-field">
+            <VBox.margin>
+               <Insets left="45.0" right="45.0" />
+            </VBox.margin>
+         </TextField>
+      </VBox>
+      <HBox alignment="CENTER_LEFT">
+         <VBox.margin>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="5.0" />
+         </VBox.margin>
+         <VBox prefWidth="350.0" spacing="10.0">
+            <HBox.margin>
+               <Insets />
+            </HBox.margin>
+            <Label maxWidth="1.7976931348623157E308" styleClass="text-info" text="Badge prize pool">
+               <VBox.margin>
+                  <Insets left="60.0" right="60.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="badgesPoolField" maxWidth="-Infinity" prefHeight="26.0" prefWidth="240.0" promptText="Type here..." styleClass="input-field">
+               <VBox.margin>
+                  <Insets left="57.0" />
+               </VBox.margin>
+            </TextField>
+         </VBox>
+         <VBox prefWidth="350.0" spacing="10.0">
+            <Label maxWidth="1.7976931348623157E308" styleClass="text-info" text="Tokens prize pool">
+               <VBox.margin>
+                  <Insets left="60.0" right="60.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="tokensPoolField" maxWidth="-Infinity" prefHeight="26.0" prefWidth="240.0" promptText="Type here..." styleClass="input-field">
+               <VBox.margin>
+                  <Insets left="57.0" />
+               </VBox.margin>
+            </TextField>
+         </VBox>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="75.0" prefWidth="600.0">
-         <Label text="Text"/>
-         <TextArea fx:id="challengeTextField" prefHeight="200.0" prefWidth="200.0"/>
+      <HBox alignment="CENTER_LEFT" prefWidth="780.0">
+         <VBox.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="5.0" />
+         </VBox.margin>
+         <VBox prefWidth="350.0" spacing="10.0">
+            <HBox.margin>
+               <Insets />
+            </HBox.margin>
+            <Label maxWidth="1.7976931348623157E308" styleClass="text-info" text="Max attempts">
+               <VBox.margin>
+                  <Insets left="60.0" right="60.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="maxAttemptsField" maxWidth="-Infinity" prefHeight="26.0" prefWidth="240.0" promptText="Type no for unlimited..." styleClass="input-field">
+               <VBox.margin>
+                  <Insets left="57.0" />
+               </VBox.margin>
+            </TextField>
+         </VBox>
+         <VBox prefHeight="64.0" prefWidth="350.0" spacing="10.0">
+            <Label maxWidth="1.7976931348623157E308" styleClass="text-info" text="Tokens prize">
+               <VBox.margin>
+                  <Insets left="60.0" right="60.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="tokensPrizeField" maxWidth="-Infinity" prefHeight="26.0" prefWidth="240.0" promptText="Type here..." styleClass="input-field">
+               <VBox.margin>
+                  <Insets left="57.0" />
+               </VBox.margin>
+            </TextField>
+         </VBox>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="75.0" prefWidth="600.0">
-         <Label text="Answer"/>
-         <TextField fx:id="answerField"/>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="75.0" prefWidth="600.0">
-         <Label text="Max attempts"/>
-         <TextField fx:id="maxAttemptsField"/>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="75.0" prefWidth="600.0">
-         <Label text="Badge prize pool"/>
-         <TextField fx:id="badgesPoolField"/>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="75.0" prefWidth="600.0">
-         <Label text="Tokens prize pool"/>
-         <TextField fx:id="tokensPoolField"/>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="75.0" prefWidth="600.0">
-         <Label text="Tokens prize"/>
-         <TextField fx:id="tokensPrizeField"/>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="66.0" prefWidth="600.0">
-         <Button fx:id="addChallengeBtn" mnemonicParsing="false" text="Launch challenge"/>
-      </HBox>
+      <Button fx:id="addChallengeBtn" mnemonicParsing="false" prefHeight="48.0" prefWidth="199.0" styleClass="launch-btn" text="Launch challenge">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <VBox.margin>
+            <Insets top="20.0" />
+         </VBox.margin></Button>
+      <Label fx:id="resultLabel" styleClass="error-label" text="Label" textAlignment="CENTER">
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </Label>
    </VBox>
+   <padding>
+      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+   </padding>
 </AnchorPane>
