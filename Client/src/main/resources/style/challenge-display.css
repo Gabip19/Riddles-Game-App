@@ -1,0 +1,49 @@
+@font-face {
+    src: url("fonts/Montserrat-Regular.ttf");
+}
+
+.anchor {
+    -fx-background-color: rgb(0, 0, 0, 0);
+}
+
+.root {
+    -fx-font-family: Montserrat;
+    -fx-background-color: linear-gradient(to top, rgba(37,36,41,1) 20%, rgba(91,91,107,1) 80%, rgb(97, 166, 100) 100%);
+    -fx-background-radius: 30;
+}
+
+.title {
+    -fx-font-size: 45px;
+    -fx-text-fill: white;
+}
+
+.author {
+    -fx-font-size: 20px;
+    -fx-text-fill: #c2c3c9;
+}
+
+.text-label {
+    -fx-background-color: #2b2f34;
+    -fx-font-size: 20px;
+    -fx-background-radius: 30;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(105, 148, 107, 0.3), 30, 0.5, 0, 0);
+}
+
+.answer {
+    -fx-background-color: rgb(0, 0, 0, 0);
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+    -fx-border-style: hidden hidden solid hidden;
+    -fx-border-color: rgba(105, 148, 107, 1);
+}
+
+.submit-btn {
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+    -fx-background-color: rgb(56, 171, 59);
+    -fx-background-radius: 10px;
+    /*-fx-border-style: solid;*/
+    /*-fx-border-radius: 10px;*/
+    /*-fx-border-width: 5px;*/
+}
