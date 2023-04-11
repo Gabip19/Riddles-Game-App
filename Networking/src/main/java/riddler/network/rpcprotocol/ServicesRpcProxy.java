@@ -2,10 +2,9 @@ package riddler.network.rpcprotocol;
 
 
 import riddler.domain.Challenge;
+import riddler.domain.Submission;
 import riddler.domain.User;
-import riddler.domain.validator.exceptions.ChallengeValidationException;
-import riddler.domain.validator.exceptions.InvalidCredentialsException;
-import riddler.domain.validator.exceptions.UserValidationException;
+import riddler.domain.validator.exceptions.*;
 import riddler.network.dto.DTOUtils;
 import riddler.network.dto.UserDTO;
 import riddler.services.ClientObserver;
@@ -234,6 +233,28 @@ public class ServicesRpcProxy implements Services {
         }
     }
 
+    @Override
+    public void sendSubmission(Submission submission) {
+        Request submissionRequest = new Request.Builder()
+                .type(RequestType.SEND_SUBMISSION)
+                .data(submission)
+                .build();
+        sendRequest(submissionRequest);
+
+        Response response = readResponse();
+        if (response.type() == ResponseType.INVALID_SUBMISSION_ANSWER) {
+            String err = response.data().toString();
+            throw new InvalidSubmissionAnswerException(err);
+        } else if (response.type() == ResponseType.NO_ATTEMPTS_LEFT) {
+            String err = response.data().toString();
+            throw new NoAttemptsLeftException(err);
+        } else if (response.type() == ResponseType.ERROR) {
+            closeConnection();
+            String err = response.data().toString();
+            throw new RuntimeException(err);
+        }
+    }
+
     private boolean isUpdate(Response response) {
         return false;
     }
@@ -265,12 +286,12 @@ public class ServicesRpcProxy implements Services {
                     }
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
+                    System.out.println("[READER] Error: " + e.getMessage());
                     try {
                         Thread.sleep(3000);
                     } catch (InterruptedException ex) {
                         throw new RuntimeException(ex);
                     }
-                    System.out.println("[READER] Error: " + e.getMessage());
                 }
             }
         }

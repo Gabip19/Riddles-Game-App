@@ -26,7 +26,7 @@ public class DbEntityExtractor {
     public static Challenge extractChallenge(ResultSet resultSet) throws SQLException {
         UUID id = resultSet.getObject("id", UUID.class);
         String title = resultSet.getString("title");
-        String text = resultSet.getString("text");
+        String text = resultSet.getString("challenge_text");
         String answer = resultSet.getString("answer");
         int maxAttempts = resultSet.getInt("max_attempts");
         int badgesPool = resultSet.getInt("badges_pool");
@@ -39,7 +39,7 @@ public class DbEntityExtractor {
         UUID id = resultSet.getObject("id", UUID.class);
         String answer = resultSet.getString("answer");
         LocalDateTime time = resultSet.getTimestamp("submission_time").toLocalDateTime();
-        int noAttempts = resultSet.getInt("attempts_number");
-        return new Submission(id, null, null, answer, time, noAttempts);
+        boolean isSolved = resultSet.getBoolean("is_solved");
+        return new Submission(id, null, null, answer, time, isSolved);
     }
 }

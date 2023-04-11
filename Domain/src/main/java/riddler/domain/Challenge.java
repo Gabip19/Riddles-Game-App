@@ -8,8 +8,8 @@ public class Challenge extends Entity<UUID> {
     private final String answer;
     private User author;
     private final int maxAttempts;
-    private final int badgesPrizePool;
-    private final int tokensPrizePool;
+    private int badgesPrizePool;
+    private int tokensPrizePool;
     private final int tokensPrize;
 
     public static final int INFINITE_ATTEMPTS = -1;
@@ -72,5 +72,13 @@ public class Challenge extends Entity<UUID> {
 
     public void setAuthor(User author) {
         this.author = author;
+    }
+
+    public void decreaseBadgesPool() {
+        this.badgesPrizePool -= 1;
+    }
+
+    public void decreaseTokensPool() {
+        this.tokensPrizePool -= this.tokensPrize;
     }
 }

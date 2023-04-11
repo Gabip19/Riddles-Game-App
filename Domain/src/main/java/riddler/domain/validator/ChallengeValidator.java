@@ -25,6 +25,10 @@ public class ChallengeValidator implements Validator<Challenge> {
             errors += "Number of prize tokens must be lower than the token pool.\n";
         }
 
+        if (entity.getTokensPrizePool() % entity.getTokensPrize() != 0) {
+            errors += "Tokens prize pool number must be divisible by token prize.\n";
+        }
+
         if (!(errors.equals(""))) {
             throw new ChallengeValidationException(errors);
         }

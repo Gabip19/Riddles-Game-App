@@ -8,25 +8,36 @@ public class Submission extends Entity<UUID> {
     private User user;
     private String answer;
     private LocalDateTime submissionTime;
-    private int noAttempts;
+    private boolean solved;
 
-    public Submission(Challenge challenge, User user, String answer, LocalDateTime submissionTime, int noAttempts) {
+    public Submission(Challenge challenge, User user, String answer, LocalDateTime submissionTime, boolean solved) {
         this.challenge = challenge;
         this.user = user;
         this.answer = answer;
         this.submissionTime = submissionTime;
-        this.noAttempts = noAttempts;
+        this.solved = solved;
         setId(UUID.randomUUID());
     }
 
-    public Submission(UUID id, Challenge challenge, User user, String answer, LocalDateTime submissionTime, int noAttempts) {
+    public Submission(Challenge challenge, User user, String answer, LocalDateTime submissionTime) {
         this.challenge = challenge;
         this.user = user;
         this.answer = answer;
         this.submissionTime = submissionTime;
-        this.noAttempts = noAttempts;
+        this.solved = false;
+        setId(UUID.randomUUID());
+    }
+
+    public Submission(UUID id, Challenge challenge, User user, String answer, LocalDateTime submissionTime, boolean solved) {
+        this.challenge = challenge;
+        this.user = user;
+        this.answer = answer;
+        this.submissionTime = submissionTime;
+        this.solved = solved;
         setId(id);
     }
+
+
 
     public Challenge getChallenge() {
         return challenge;
@@ -60,11 +71,11 @@ public class Submission extends Entity<UUID> {
         this.submissionTime = submissionTime;
     }
 
-    public int getNoAttempts() {
-        return noAttempts;
+    public boolean isSolved() {
+        return solved;
     }
 
-    public void setNoAttempts(int noAttempts) {
-        this.noAttempts = noAttempts;
+    public void setSolved(boolean solved) {
+        this.solved = solved;
     }
 }

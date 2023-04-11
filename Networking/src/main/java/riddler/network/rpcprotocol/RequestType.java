@@ -7,5 +7,6 @@ public enum RequestType {
     SIGN_UP,
     GET_RIDDLE,
     GET_TOP_USERS,
-    ADD_CHALLENGE
+    ADD_CHALLENGE,
+    SEND_SUBMISSION
 }

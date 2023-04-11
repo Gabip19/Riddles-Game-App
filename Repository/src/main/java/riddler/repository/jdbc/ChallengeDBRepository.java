@@ -5,10 +5,7 @@ import riddler.domain.User;
 import riddler.repository.ChallengeRepository;
 import riddler.repository.UserRepository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -34,7 +31,11 @@ public class ChallengeDBRepository implements ChallengeRepository {
             ps.setObject(1, elem.getId());
             ps.setString(2, elem.getTitle());
             ps.setString(3, elem.getText());
-            ps.setObject(4, elem.getAuthor().getId());
+            if (elem.getAuthor() != null) {
+                ps.setObject(4, elem.getAuthor().getId());
+            } else {
+                ps.setNull(4, Types.NULL);
+            }
             ps.setInt(5, elem.getMaxAttempts());
             ps.setInt(6, elem.getBadgesPrizePool());
             ps.setInt(7, elem.getTokensPrizePool());
@@ -68,7 +69,20 @@ public class ChallengeDBRepository implements ChallengeRepository {
 
     @Override
     public Challenge findById(UUID id) {
-        throw new RuntimeException("Not implemented.");
+        Connection con = dbUtils.getConnection();
+        String find = "SELECT * FROM challenges WHERE id = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(find)) {
+            ps.setObject(1, id);
+            try (ResultSet resultSet = ps.executeQuery()) {
+                if (resultSet.next()) {
+                    return getChallenge(resultSet);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error DB " + e);
+        }
+        return null;
     }
 
     @Override
@@ -80,12 +94,7 @@ public class ChallengeDBRepository implements ChallengeRepository {
         try (PreparedStatement ps = con.prepareStatement(select)) {
             try (ResultSet resultSet = ps.executeQuery()) {
                 while (resultSet.next()) {
-                    Challenge challenge = DbEntityExtractor.extractChallenge(resultSet);
-                    UUID authorId = resultSet.getObject("author_id", UUID.class);
-                    if (authorId != null) {
-                        User user = userRepo.findById(authorId);
-                        challenge.setAuthor(user);
-                    }
+                    Challenge challenge = getChallenge(resultSet);
                     result.add(challenge);
                 }
             }
@@ -94,6 +103,16 @@ public class ChallengeDBRepository implements ChallengeRepository {
         }
 
         return result;
+    }
+
+    private Challenge getChallenge(ResultSet resultSet) throws SQLException {
+        Challenge challenge = DbEntityExtractor.extractChallenge(resultSet);
+        UUID authorId = resultSet.getObject("author_id", UUID.class);
+        if (authorId != null) {
+            User user = userRepo.findById(authorId);
+            challenge.setAuthor(user);
+        }
+        return challenge;
     }
 
 }

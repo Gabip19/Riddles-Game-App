@@ -2,10 +2,9 @@ package riddler.network.rpcprotocol;
 
 
 import riddler.domain.Challenge;
+import riddler.domain.Submission;
 import riddler.domain.User;
-import riddler.domain.validator.exceptions.ChallengeValidationException;
-import riddler.domain.validator.exceptions.InvalidCredentialsException;
-import riddler.domain.validator.exceptions.UserValidationException;
+import riddler.domain.validator.exceptions.*;
 import riddler.network.dto.DTOUtils;
 import riddler.network.dto.UserDTO;
 import riddler.services.ClientObserver;
@@ -95,6 +94,9 @@ public class ClientRpcWorker implements Runnable, ClientObserver {
         if (request.type() == RequestType.ADD_CHALLENGE) {
             return handleAddChallenge(request);
         }
+        if (request.type() == RequestType.SEND_SUBMISSION) {
+            return handleSendSubmission(request);
+        }
         return null;
     }
 
@@ -105,11 +107,33 @@ public class ClientRpcWorker implements Runnable, ClientObserver {
 
         } catch (ChallengeValidationException e) {
             System.out.println(e.getMessage());
-
             return new Response.Builder()
                     .type(ResponseType.INVALID_CHALLENGE_DATA)
-                    .data(e.getMessage())
-                    .build();
+                    .data(e.getMessage()).build();
+        }
+    }
+
+    private Response handleSendSubmission(Request request) {
+        Submission submission = (Submission) request.data();
+        try {
+            service.sendSubmission(submission);
+            return new Response.Builder().type(ResponseType.OK).build();
+
+        } catch (InvalidSubmissionAnswerException e) {
+            System.out.println(e.getMessage());
+            return new Response.Builder().type(ResponseType.INVALID_SUBMISSION_ANSWER)
+                    .data(e.getMessage()).build();
+
+        } catch (NoAttemptsLeftException e) {
+            System.out.println(e.getMessage());
+            return new Response.Builder().type(ResponseType.NO_ATTEMPTS_LEFT)
+                    .data(e.getMessage()).build();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            connected = false;
+            return new Response.Builder().type(ResponseType.ERROR)
+                    .data(e.getMessage()).build();
         }
     }
 

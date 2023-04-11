@@ -5,8 +5,10 @@ import riddler.domain.validator.UserValidator;
 import riddler.network.server.AbstractServer;
 import riddler.network.server.RpcConcurrentServer;
 import riddler.repository.ChallengeRepository;
+import riddler.repository.SubmissionRepository;
 import riddler.repository.UserRepository;
 import riddler.repository.jdbc.ChallengeDBRepository;
+import riddler.repository.jdbc.SubmissionDBRepository;
 import riddler.repository.jdbc.UserDBRepository;
 import riddler.server.service.ConcreteService;
 import riddler.server.service.comparators.TokenBasedUserComparator;
@@ -61,10 +63,12 @@ public class RpcServerStarter {
     private static Services initService(Properties props) {
         UserRepository userRepo = new UserDBRepository(props);
         ChallengeRepository challengeRepo = new ChallengeDBRepository(userRepo, props);
+        SubmissionRepository submissionRepo = new SubmissionDBRepository(challengeRepo, userRepo, props);
 
         return new ConcreteService(
                 userRepo,
                 challengeRepo,
+                submissionRepo,
                 new UserValidator(),
                 new ChallengeValidator(),
                 new TokenBasedUserComparator()

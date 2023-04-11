@@ -2,11 +2,15 @@ package riddler.server.service;
 
 import com.google.gson.Gson;
 import riddler.domain.Challenge;
+import riddler.domain.Submission;
 import riddler.domain.User;
 import riddler.domain.validator.Validator;
 import riddler.domain.validator.exceptions.InvalidCredentialsException;
+import riddler.domain.validator.exceptions.InvalidSubmissionAnswerException;
+import riddler.domain.validator.exceptions.NoAttemptsLeftException;
 import riddler.domain.validator.exceptions.UserValidationException;
 import riddler.repository.ChallengeRepository;
+import riddler.repository.SubmissionRepository;
 import riddler.repository.UserRepository;
 import riddler.server.service.comparators.UserComparator;
 import riddler.services.ClientObserver;
@@ -22,6 +26,7 @@ import java.net.URL;
 public class ConcreteService implements Services {
     private final UserRepository userRepo;
     private final ChallengeRepository challengeRepo;
+    private final SubmissionRepository submissionRepo;
     private final Map<UUID, ClientObserver> loggedClients;
     private final Validator<User> userValidator;
     private final Validator<Challenge> challengeValidator;
@@ -29,9 +34,10 @@ public class ConcreteService implements Services {
 
     private final int defaultThreadsNum = 5;
 
-    public ConcreteService(UserRepository userRepo, ChallengeRepository challengeRepo, Validator<User> userValidator, Validator<Challenge> challengeValidator, UserComparator userComparator) {
+    public ConcreteService(UserRepository userRepo, ChallengeRepository challengeRepo, SubmissionRepository submissionRepo, Validator<User> userValidator, Validator<Challenge> challengeValidator, UserComparator userComparator) {
         this.userRepo = userRepo;
         this.challengeRepo = challengeRepo;
+        this.submissionRepo = submissionRepo;
         this.userValidator = userValidator;
         this.challengeValidator = challengeValidator;
         this.userComparator = userComparator;
@@ -78,12 +84,12 @@ public class ConcreteService implements Services {
         return userRepo.findByEmail(email) == null;
     }
 
-    public synchronized ArrayList<User> getUsers() {
+    public ArrayList<User> getUsers() {
         return new ArrayList<>( (Collection<User>) userRepo.findAll());
     }
 
     @Override
-    public synchronized ArrayList<User> getTopUsers(int topNumber) {
+    public ArrayList<User> getTopUsers(int topNumber) {
         PriorityQueue<User> topUsers = getTopUsers(topNumber, userComparator);
 
         ArrayList<User> topUsersArray = new ArrayList<>();
@@ -158,7 +164,7 @@ public class ConcreteService implements Services {
         Map jsonRootObject = new Gson().fromJson(infoString, Map.class);
         String text = (String) jsonRootObject.get("riddle");
         String answer = (String) jsonRootObject.get("answer");
-        return new Challenge("Titlul sau", text, answer, null, Challenge.INFINITE_ATTEMPTS, 1, 100, 100);
+        return new Challenge("Random riddle? Try this one!", text, answer, null, Challenge.INFINITE_ATTEMPTS, 1, 100, 100);
     }
 
     @Override
@@ -171,6 +177,58 @@ public class ConcreteService implements Services {
 
         userRepo.update(challengeOwner, challengeOwner.getId());
         challengeRepo.add(challenge);
+    }
+
+    @Override
+    public synchronized void sendSubmission(Submission submission) {
+        Challenge challenge = challengeRepo.findById(submission.getChallenge().getId());
+
+        if (challenge == null) {
+            challengeRepo.add(submission.getChallenge());
+            challenge = submission.getChallenge();
+        }
+
+        int noAttempts = submissionRepo.getNumberOfAttempts(submission.getUser(), submission.getChallenge());
+        if (challenge.getMaxAttempts() != Challenge.INFINITE_ATTEMPTS && noAttempts == challenge.getMaxAttempts()) {
+            throw new NoAttemptsLeftException("No attempts left.\n");
+        }
+
+        if (foundGoodAnswer(submission)) {
+            rewardUser(submission, noAttempts + 1);
+            updatePrizePool(submission.getChallenge(), noAttempts + 1);
+            submission.setSolved(true);
+            submissionRepo.add(submission);
+        } else {
+            submissionRepo.add(submission);
+            throw new InvalidSubmissionAnswerException("Wrong answer.\n");
+        }
+    }
+
+    private boolean foundGoodAnswer(Submission submission) {
+        return submission.getChallenge().getAnswer().equals(submission.getAnswer());
+    }
+
+    private synchronized void rewardUser(Submission submission, int attemptNum) {
+        User user = submission.getUser();
+        Challenge challenge = submission.getChallenge();
+
+        if (attemptNum == 1 && challenge.getBadgesPrizePool() > 0) {
+            user.addBadges(1);
+        } else if (challenge.getTokensPrize() > 0) {
+            user.addTokens(challenge.getTokensPrize());
+        }
+
+        userRepo.update(user, user.getId());
+    }
+
+    private synchronized void updatePrizePool(Challenge challenge, int attemptNum) {
+        if (attemptNum == 1 && challenge.getBadgesPrizePool() > 0) {
+            challenge.decreaseBadgesPool();
+        } else if (challenge.getTokensPrizePool() > 0) {
+            challenge.decreaseTokensPool();
+        }
+
+        challengeRepo.update(challenge, challenge.getId());
     }
 
 }

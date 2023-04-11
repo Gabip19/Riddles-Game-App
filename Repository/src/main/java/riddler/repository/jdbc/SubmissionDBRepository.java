@@ -18,7 +18,7 @@ public class SubmissionDBRepository implements SubmissionRepository {
     private final ChallengeRepository challengeRepo;
     private final UserRepository userRepo;
 
-    public SubmissionDBRepository(Properties properties, ChallengeRepository challengeRepo, UserRepository userRepo) {
+    public SubmissionDBRepository(ChallengeRepository challengeRepo, UserRepository userRepo, Properties properties) {
         dbUtils = new JdbcUtils(properties);
         this.challengeRepo = challengeRepo;
         this.userRepo = userRepo;
@@ -27,7 +27,8 @@ public class SubmissionDBRepository implements SubmissionRepository {
     @Override
     public void add(Submission elem) {
         Connection con = dbUtils.getConnection();
-        String insert = "INSERT INTO submissions (id, challenge_id, user_id, answer, submission_time, attempts_number) VALUES (?, ?, ?, ?, ?, ?)";
+        String insert = "INSERT INTO submissions (id, challenge_id, user_id, answer, submission_time, is_solved) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement ps = con.prepareStatement(insert)) {
             ps.setObject(1, elem.getId());
@@ -35,7 +36,7 @@ public class SubmissionDBRepository implements SubmissionRepository {
             ps.setObject(3, elem.getUser().getId());
             ps.setString(4, elem.getAnswer());
             ps.setTimestamp(5, Timestamp.valueOf(elem.getSubmissionTime()));
-            ps.setInt(6, elem.getNoAttempts());
+            ps.setBoolean(6, elem.isSolved());
             ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error DB " + e);
@@ -50,12 +51,12 @@ public class SubmissionDBRepository implements SubmissionRepository {
     @Override
     public void update(Submission elem, UUID id) {
         Connection con = dbUtils.getConnection();
-        String update = "UPDATE submissions SET answer = ?, submission_time = ?, attempts_number = ? WHERE id = ?";
+        String update = "UPDATE submissions SET answer = ?, submission_time = ?, is_solved = ? WHERE id = ?";
 
         try (PreparedStatement ps = con.prepareStatement(update)) {
             ps.setString(1, elem.getAnswer());
             ps.setTimestamp(2, Timestamp.valueOf(elem.getSubmissionTime()));
-            ps.setInt(3, elem.getNoAttempts());
+            ps.setBoolean(3, elem.isSolved());
             ps.setObject(4, id);
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -137,6 +138,25 @@ public class SubmissionDBRepository implements SubmissionRepository {
             System.out.println("Error DB " + e);
         }
         return null;
+    }
+
+    @Override
+    public int getNumberOfAttempts(User user, Challenge challenge) {
+        Connection con = dbUtils.getConnection();
+        String find = "SELECT COUNT(*) AS no_attempts FROM submissions WHERE user_id = ? AND challenge_id = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(find)) {
+            ps.setObject(1, user.getId());
+            ps.setObject(2, challenge.getId());
+            try (ResultSet resultSet = ps.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("no_attempts");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error DB " + e);
+        }
+        return 0;
     }
 
     private Submission getSubmission(ResultSet resultSet) throws SQLException {
