@@ -2,10 +2,12 @@ package riddler.repository.jdbc;
 
 
 import riddler.domain.Challenge;
+import riddler.domain.Submission;
 import riddler.domain.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class DbEntityExtractor {
@@ -31,5 +33,13 @@ public class DbEntityExtractor {
         int tokensPool = resultSet.getInt("tokens_pool");
         int tokensPrize = resultSet.getInt("tokens_prize");
         return new Challenge(id, title, text, answer, null, maxAttempts, badgesPool, tokensPool, tokensPrize);
+    }
+
+    public static Submission extractSubmission(ResultSet resultSet) throws SQLException {
+        UUID id = resultSet.getObject("id", UUID.class);
+        String answer = resultSet.getString("answer");
+        LocalDateTime time = resultSet.getTimestamp("submission_time").toLocalDateTime();
+        int noAttempts = resultSet.getInt("attempts_number");
+        return new Submission(id, null, null, answer, time, noAttempts);
     }
 }

@@ -53,7 +53,17 @@ public class ChallengeDBRepository implements ChallengeRepository {
 
     @Override
     public void update(Challenge elem, UUID id) {
-        throw new RuntimeException("Not implemented.");
+        Connection con = dbUtils.getConnection();
+        String update = "UPDATE challenges SET badges_pool = ?, tokens_pool = ? WHERE id = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(update)) {
+            ps.setInt(1, elem.getBadgesPrizePool());
+            ps.setInt(2, elem.getTokensPrizePool());
+            ps.setObject(3, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error DB " + e);
+        }
     }
 
     @Override
