@@ -21,6 +21,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class ConcreteService implements Services {
@@ -198,6 +200,7 @@ public class ConcreteService implements Services {
             updatePrizePool(submission.getChallenge(), noAttempts + 1);
             submission.setSolved(true);
             submissionRepo.add(submission);
+            notifyTopUpdate();
         } else {
             submissionRepo.add(submission);
             throw new InvalidSubmissionAnswerException("Wrong answer.\n");
@@ -242,6 +245,18 @@ public class ConcreteService implements Services {
         }
 
         challengeRepo.update(challenge, challenge.getId());
+    }
+
+    private void notifyTopUpdate() {
+        ArrayList<User> topUsers = getTopUsers(50);
+
+        ExecutorService executorService = Executors.newFixedThreadPool(defaultThreadsNum);
+
+        for (ClientObserver client : loggedClients.values()) {
+            executorService.execute(() -> client.updateTop(topUsers));
+        }
+
+        executorService.shutdown();
     }
 
 }

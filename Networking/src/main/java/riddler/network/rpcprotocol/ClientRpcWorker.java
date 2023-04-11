@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClientRpcWorker implements Runnable, ClientObserver {
@@ -243,4 +244,15 @@ public class ClientRpcWorker implements Runnable, ClientObserver {
         outputStream.flush();
     }
 
+    @Override
+    public void updateTop(ArrayList<User> topUsers) {
+        UserDTO[] userDTOS = DTOUtils.getDTO(topUsers.toArray(new User[0]));
+        Response notification = new Response.Builder().type(ResponseType.TOP_UPDATE)
+                .data(userDTOS).build();
+        try {
+            sendResponse(notification);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

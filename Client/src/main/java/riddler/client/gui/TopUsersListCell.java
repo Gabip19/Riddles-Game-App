@@ -1,6 +1,5 @@
 package riddler.client.gui;
 
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.ListCell;
 import riddler.domain.User;

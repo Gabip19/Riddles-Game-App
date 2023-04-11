@@ -256,10 +256,15 @@ public class ServicesRpcProxy implements Services {
     }
 
     private boolean isUpdate(Response response) {
-        return false;
+        return response.type() == ResponseType.TOP_UPDATE;
     }
 
     private void handleUpdate(Response response) {
+        if (response.type() == ResponseType.TOP_UPDATE) {
+            UserDTO[] userDTOS = (UserDTO[]) response.data();
+            User[] users = DTOUtils.getFromDTO(userDTOS);
+            client.updateTop(new ArrayList<>(List.of(users)));
+        }
     }
 
     private class ReaderThread implements Runnable {

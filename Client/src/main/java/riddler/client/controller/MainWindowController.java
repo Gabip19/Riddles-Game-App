@@ -1,5 +1,6 @@
 package riddler.client.controller;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,6 +16,7 @@ import riddler.domain.User;
 import riddler.services.ClientObserver;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class MainWindowController extends GuiController implements ClientObserver {
@@ -95,5 +97,11 @@ public class MainWindowController extends GuiController implements ClientObserve
         stage.setTitle("Teledon Login");
         stage.setScene(scene);
         stage.show();
+    }
+
+    @Override
+    public void updateTop(ArrayList<User> topUsers) {
+        System.out.println("Am primit notificare update top users.");
+        Platform.runLater(() -> this.topUsers.setAll(topUsers));
     }
 }
