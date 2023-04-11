@@ -101,7 +101,7 @@ public class SubmissionDBRepository implements SubmissionRepository {
     }
 
     @Override
-    public List<Submission> getSubmissionsForUser(User user) {
+    public List<Submission> findAllForUser(User user) {
         List<Submission> result = new ArrayList<>();
         Connection con = dbUtils.getConnection();
         String select = "SELECT * FROM submissions WHERE user_id = ?";
@@ -118,6 +118,25 @@ public class SubmissionDBRepository implements SubmissionRepository {
         }
 
         return result;
+    }
+
+    @Override
+    public Submission findByUserAndChallenge(User user, Challenge challenge) {
+        Connection con = dbUtils.getConnection();
+        String find = "SELECT * FROM submissions WHERE user_id = ? AND challenge_id = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(find)) {
+            ps.setObject(1, user.getId());
+            ps.setObject(2, challenge.getId());
+            try (ResultSet resultSet = ps.executeQuery()) {
+                if (resultSet.next()) {
+                    return getSubmission(resultSet);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error DB " + e);
+        }
+        return null;
     }
 
     private Submission getSubmission(ResultSet resultSet) throws SQLException {
