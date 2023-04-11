@@ -161,7 +161,7 @@ public class ConcreteService implements Services {
     }
 
     private Challenge extractChallenge(String infoString) {
-        Map jsonRootObject = new Gson().fromJson(infoString, Map.class);
+        var jsonRootObject = new Gson().fromJson(infoString, Map.class);
         String text = (String) jsonRootObject.get("riddle");
         String answer = (String) jsonRootObject.get("answer");
         return new Challenge("Random riddle? Try this one!", text, answer, null, Challenge.INFINITE_ATTEMPTS, 1, 100, 100);
@@ -193,7 +193,7 @@ public class ConcreteService implements Services {
             throw new NoAttemptsLeftException("No attempts left.\n");
         }
 
-        if (foundGoodAnswer(submission)) {
+        if (solvedChallenge(submission)) {
             rewardUser(submission, noAttempts + 1);
             updatePrizePool(submission.getChallenge(), noAttempts + 1);
             submission.setSolved(true);
@@ -204,8 +204,21 @@ public class ConcreteService implements Services {
         }
     }
 
-    private boolean foundGoodAnswer(Submission submission) {
-        return submission.getChallenge().getAnswer().equals(submission.getAnswer());
+    private boolean solvedChallenge(Submission submission) {
+        String userAnswer = submission.getAnswer().toLowerCase();
+        String correctAnswer = submission.getChallenge().getAnswer().toLowerCase();
+
+        if (userAnswer.equals(correctAnswer)) {
+            return true;
+        } else if (correctAnswer.startsWith(userAnswer)) {
+            return true;
+        } else if (userAnswer.equals(correctAnswer.split(" ")[1])) {
+            return true;
+        } else {
+            int answerNoWords = userAnswer.split(" ").length;
+            int correctAnswerNoWords = correctAnswer.split(" ").length;
+            return answerNoWords >= (correctAnswerNoWords / 2) && correctAnswer.contains(userAnswer);
+        }
     }
 
     private synchronized void rewardUser(Submission submission, int attemptNum) {
