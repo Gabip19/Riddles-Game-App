@@ -1,5 +1,6 @@
 package riddler.server.service;
 
+import com.google.gson.Gson;
 import riddler.domain.Challenge;
 import riddler.domain.User;
 import riddler.domain.validator.Validator;
@@ -94,46 +95,6 @@ public class ConcreteService implements Services {
         return topUsersArray;
     }
 
-    @Override
-    public synchronized void getRiddle() {
-        URL url = null;
-        try {
-//            url = new URL("https://api.api-ninjas.com/v1/riddles");
-            url = new URL("https://riddles-api.vercel.app/random");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            connection.connect();
-
-            if (connection.getResponseCode() != 200) {
-                System.out.println("FAIL API");
-            } else {
-                StringBuilder infoString = new StringBuilder();
-                Scanner scanner = new Scanner(url.openStream());
-
-                while (scanner.hasNext()) {
-                    infoString.append(scanner.nextLine());
-                }
-
-                scanner.close();
-                System.out.println(infoString);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public void addChallenge(Challenge challenge) {
-        challengeValidator.validate(challenge);
-
-        User challengeOwner = challenge.getAuthor();
-        challengeOwner.removeBadges(challenge.getBadgesPrizePool());
-        challengeOwner.removeTokens(challenge.getTokensPrizePool());
-
-        userRepo.update(challengeOwner, challengeOwner.getId());
-        challengeRepo.add(challenge);
-    }
-
     private PriorityQueue<User> getTopUsers(int topNumber, UserComparator comparator) {
         ArrayList<User> users = getUsers();
 
@@ -162,4 +123,54 @@ public class ConcreteService implements Services {
 
         return topUsers;
     }
+
+    @Override
+    public synchronized Challenge getRiddle() {
+        URL url = null;
+        try {
+//            url = new URL("https://api.api-ninjas.com/v1/riddles");
+            url = new URL("https://riddles-api.vercel.app/random");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
+
+            if (connection.getResponseCode() != 200) {
+                System.out.println("FAIL API");
+            } else {
+                StringBuilder infoString = new StringBuilder();
+                Scanner scanner = new Scanner(url.openStream());
+
+                while (scanner.hasNext()) {
+                    infoString.append(scanner.nextLine());
+                }
+
+                scanner.close();
+                System.out.println(infoString);
+                return extractChallenge(infoString.toString());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    private Challenge extractChallenge(String infoString) {
+        Map jsonRootObject = new Gson().fromJson(infoString, Map.class);
+        String text = (String) jsonRootObject.get("riddle");
+        String answer = (String) jsonRootObject.get("answer");
+        return new Challenge("Titlul sau", text, answer, null, Challenge.INFINITE_ATTEMPTS, 1, 100, 100);
+    }
+
+    @Override
+    public synchronized void addChallenge(Challenge challenge) {
+        challengeValidator.validate(challenge);
+
+        User challengeOwner = challenge.getAuthor();
+        challengeOwner.removeBadges(challenge.getBadgesPrizePool());
+        challengeOwner.removeTokens(challenge.getTokensPrizePool());
+
+        userRepo.update(challengeOwner, challengeOwner.getId());
+        challengeRepo.add(challenge);
+    }
+
 }

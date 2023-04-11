@@ -38,7 +38,6 @@ public class LoginController extends GuiController {
         this.mainController = mainController;
     }
 
-
     public void initialize() {
         loginBtn.setOnAction(param -> login());
         switchToSignUpBtn.setOnAction(param -> switchToSignUpScene());

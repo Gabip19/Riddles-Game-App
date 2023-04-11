@@ -117,23 +117,14 @@ public class ClientRpcWorker implements Runnable, ClientObserver {
         System.out.println("Get riddle request ...");
 
         try {
-            service.getRiddle();
-            return new Response.Builder().type(ResponseType.OK).build();
-
-        } catch (UserValidationException e) {
-            System.out.println("Date invalide la challenge.");
-            System.out.println(e.getMessage());
-            connected = false;
-
+            Challenge riddle = service.getRiddle();
             return new Response.Builder()
-                    .type(ResponseType.INVALID_CHALLENGE_DATA)
-                    .data(e.getMessage())
+                    .type(ResponseType.OK)
+                    .data(riddle)
                     .build();
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
             connected = false;
-
             return new Response.Builder()
                     .type(ResponseType.ERROR)
                     .data(e.getMessage())

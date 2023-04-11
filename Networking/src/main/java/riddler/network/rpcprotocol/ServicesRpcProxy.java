@@ -196,15 +196,20 @@ public class ServicesRpcProxy implements Services {
     }
 
     @Override
-    public void getRiddle() {
+    public Challenge getRiddle() {
         Request riddleRequest = new Request.Builder().type(RequestType.GET_RIDDLE).build();
         sendRequest(riddleRequest);
 
         Response response = readResponse();
+        if (response.type() == ResponseType.OK) {
+            return (Challenge) response.data();
+        }
         if (response.type() == ResponseType.ERROR) {
             String err = response.data().toString();
             throw new RuntimeException(err);
         }
+
+        return null;
     }
 
     @Override
