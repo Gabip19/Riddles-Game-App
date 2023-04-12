@@ -6,7 +6,7 @@
     -fx-background-color: black;
 }
 
-.right-vbox {
+.right-vbox, .left-vbox {
     -fx-background-color: rgba(37,36,41,1);
     -fx-background-radius: 10px;
 }
@@ -15,4 +15,39 @@
     -fx-text-fill: white;
     -fx-font-size: 25px;
     -fx-font-family: Gotham, sans-serif;
+}
+
+.left-vbox {
+    -fx-font-family: Gotham, sans-serif;
+}
+
+.stat-icon {
+    -fx-icon-color: rgb(56, 171, 59);
+}
+
+.stat-info {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-family: Gotham, sans-serif;
+}
+
+.stats-box {
+    -fx-background-color: #121212;
+    -fx-background-radius: 15px;
+}
+
+.profile-icon {
+    -fx-icon-color: white;
+}
+
+.name-label {
+    -fx-text-fill: white;
+    -fx-font-size: 25px;
+}
+
+.logout-btn {
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+    -fx-background-color: rgb(56, 171, 59);
+    -fx-background-radius: 10px;
 }

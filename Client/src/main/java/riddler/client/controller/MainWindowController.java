@@ -29,6 +29,14 @@ public class MainWindowController extends GuiController implements ClientObserve
     @FXML
     public Button homeBtn;
     @FXML
+    public Label tokensLabel;
+    @FXML
+    public Label badgesLabel;
+    @FXML
+    public Label firstNameLabel;
+    @FXML
+    public Label lastNameLabel;
+    @FXML
     public ListView<User> topUsersListView;
     private final ObservableList<User> topUsers = FXCollections.observableArrayList();
 
@@ -42,9 +50,7 @@ public class MainWindowController extends GuiController implements ClientObserve
 
     public void initialize() {
         logOutBtn.setOnAction(param -> logout());
-        getRiddleBtn.setOnAction(param -> getRiddle());
         homeBtn.setOnAction(param -> showHomePane());
-
         initializeTopUsersListView();
     }
 
@@ -61,6 +67,10 @@ public class MainWindowController extends GuiController implements ClientObserve
         topUsers.setAll(srv.getTopUsers(50));
         loadHomePane();
         mainBorderPane.setCenter(homeRoot);
+        firstNameLabel.setText(currentUser.getFirstName());
+        lastNameLabel.setText(currentUser.getLastName());
+        badgesLabel.setText(String.valueOf(currentUser.getNoBadges()));
+        tokensLabel.setText(String.valueOf(currentUser.getNoTokens()));
     }
 
     private void loadHomePane() {
@@ -70,10 +80,6 @@ public class MainWindowController extends GuiController implements ClientObserve
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private void getRiddle() {
-        srv.getRiddle();
     }
 
     void logout() {
@@ -99,9 +105,19 @@ public class MainWindowController extends GuiController implements ClientObserve
         stage.show();
     }
 
+    private void updateCurrentUserData() {
+        int index = topUsers.indexOf(currentUser);
+        currentUser = topUsers.get(index);
+        badgesLabel.setText(String.valueOf(currentUser.getNoBadges()));
+        tokensLabel.setText(String.valueOf(currentUser.getNoTokens()));
+    }
+
     @Override
     public void updateTop(ArrayList<User> topUsers) {
         System.out.println("Am primit notificare update top users.");
-        Platform.runLater(() -> this.topUsers.setAll(topUsers));
+        Platform.runLater(() -> {
+            this.topUsers.setAll(topUsers);
+            updateCurrentUserData();
+        });
     }
 }
