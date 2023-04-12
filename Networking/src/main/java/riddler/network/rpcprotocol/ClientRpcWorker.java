@@ -6,6 +6,7 @@ import riddler.domain.Submission;
 import riddler.domain.User;
 import riddler.domain.validator.exceptions.*;
 import riddler.network.dto.ChallengeDTO;
+import riddler.network.dto.ChallengeUserDTO;
 import riddler.network.dto.DTOUtils;
 import riddler.network.dto.UserDTO;
 import riddler.services.ClientObserver;
@@ -96,7 +97,19 @@ public class ClientRpcWorker implements Runnable, ClientObserver {
         if (request.type() == RequestType.GET_CHALLENGES) {
             return handleGetChallenges(request);
         }
+        if (request.type() == RequestType.GET_NUMBER_OF_ATTEMPTS_LEFT) {
+            return handleNumberOfAttempts(request);
+        }
         return null;
+    }
+
+    private Response handleNumberOfAttempts(Request request) {
+        ChallengeUserDTO dto = (ChallengeUserDTO) request.data();
+        User user = DTOUtils.getFromDTO(dto.getUserDTO());
+        Challenge challenge = DTOUtils.getFromDTO(dto.getChallengeDTO());
+
+        int number = service.getNumberOfAttemptsLeft(user, challenge);
+        return new Response.Builder().type(ResponseType.OK).data(number).build();
     }
 
     private Response handleGetChallenges(Request request) {

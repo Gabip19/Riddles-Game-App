@@ -18,6 +18,7 @@ public class SolveChallengeController extends GuiController {
     public TextField answerField;
     public Button submitBtn;
     public Label resultLabel;
+    public Label attemptLabel;
 
     private Challenge challenge;
 
@@ -37,6 +38,21 @@ public class SolveChallengeController extends GuiController {
         User author = challenge.getAuthor();
         if (author != null) {
             authorLabel.setText(author.getFirstName() + " " + author.getLastName());
+        }
+        updateAttemptsNumberLabel();
+        checkIfIsOwner();
+    }
+
+    private void updateAttemptsNumberLabel() {
+        int numberOfAttemptsLeft = srv.getNumberOfAttemptsLeft(currentUser, this.challenge);
+        if (numberOfAttemptsLeft == 0) {
+            attemptLabel.setText("No attempts left.");
+            attemptLabel.setStyle("-fx-text-fill: red");
+            blockInput();
+        } else if (challenge.getMaxAttempts() != Challenge.INFINITE_ATTEMPTS) {
+            attemptLabel.setText("Attempts left: " + numberOfAttemptsLeft);
+        } else {
+            attemptLabel.setText("Unlimited attempts");
         }
     }
 
@@ -61,8 +77,24 @@ public class SolveChallengeController extends GuiController {
             resultLabel.setText("Wrong");
             resultLabel.setStyle("-fx-text-fill: red");
             resultLabel.setVisible(true);
+            updateAttemptsNumberLabel();
         } catch (NoAttemptsLeftException e) {
-            System.out.println("!!!!! NU MAI AI INCERCARI !!!!! " + e.getMessage());
+            resultLabel.setText("No attempts left");
+            resultLabel.setStyle("-fx-text-fill: red");
+            resultLabel.setVisible(true);
         }
+    }
+
+    private void checkIfIsOwner() {
+        if (challenge.getAuthor() != null && challenge.getAuthor().equals(currentUser)) {
+            blockInput();
+            attemptLabel.setText("You can not solve your own challenge.");
+            attemptLabel.setStyle("-fx-text-fill: red");
+        }
+    }
+
+    private void blockInput() {
+        answerField.setDisable(true);
+        submitBtn.setDisable(true);
     }
 }

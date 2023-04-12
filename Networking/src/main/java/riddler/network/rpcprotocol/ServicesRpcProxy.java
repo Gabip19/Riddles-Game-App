@@ -277,6 +277,24 @@ public class ServicesRpcProxy implements Services {
         return new ArrayList<>();
     }
 
+    @Override
+    public int getNumberOfAttemptsLeft(User user, Challenge challenge) {
+        Request request = new Request.Builder().type(RequestType.GET_NUMBER_OF_ATTEMPTS_LEFT)
+                .data(DTOUtils.getDTO(user, challenge)).build();
+        sendRequest(request);
+
+        Response response = readResponse();
+        if (response.type() == ResponseType.OK) {
+            return (int) response.data();
+        } else if (response.type() == ResponseType.ERROR) {
+            closeConnection();
+            String err = response.data().toString();
+            throw new RuntimeException(err);
+        }
+
+        return 0;
+    }
+
     private boolean isUpdate(Response response) {
         return response.type() == ResponseType.TOP_UPDATE;
     }

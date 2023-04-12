@@ -16,4 +16,5 @@ public interface Services {
     void addChallenge(Challenge challenge);
     void sendSubmission(Submission submission);
     ArrayList<Challenge> getAllChallenges();
+    int getNumberOfAttemptsLeft(User user, Challenge challenge);
 }

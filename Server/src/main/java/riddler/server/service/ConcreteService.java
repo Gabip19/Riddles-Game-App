@@ -213,6 +213,12 @@ public class ConcreteService implements Services {
         return new ArrayList<>((Collection<Challenge>) challengeRepo.findChallengesFromUsers());
     }
 
+    @Override
+    public int getNumberOfAttemptsLeft(User user, Challenge challenge) {
+        int noAttempted = submissionRepo.getNumberOfAttempts(user, challenge);
+        return challenge.getMaxAttempts() - noAttempted;
+    }
+
     private boolean solvedChallenge(Submission submission) {
         String userAnswer = submission.getAnswer().toLowerCase();
         String correctAnswer = submission.getChallenge().getAnswer().toLowerCase();
@@ -221,11 +227,12 @@ public class ConcreteService implements Services {
             return true;
         } else if (correctAnswer.startsWith(userAnswer)) {
             return true;
-        } else if (userAnswer.equals(correctAnswer.split(" ")[1])) {
-            return true;
         } else {
             int answerNoWords = userAnswer.split(" ").length;
             int correctAnswerNoWords = correctAnswer.split(" ").length;
+            if (correctAnswerNoWords > 1 && userAnswer.equals(correctAnswer.split(" ")[1])) {
+                return true;
+            }
             return answerNoWords >= (correctAnswerNoWords / 2) && correctAnswer.contains(userAnswer);
         }
     }

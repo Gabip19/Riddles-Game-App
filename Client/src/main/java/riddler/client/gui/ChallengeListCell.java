@@ -2,14 +2,19 @@ package riddler.client.gui;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.ListCell;
+import riddler.client.controller.ChallengesListController;
 import riddler.domain.Challenge;
 
 public class ChallengeListCell extends ListCell<Challenge> {
 
-    public ChallengeListCell() {
+    private final ChallengesListController challengesListController;
+
+    public ChallengeListCell(ChallengesListController challengesListController) {
         super();
+        this.challengesListController = challengesListController;
         setStyle("-fx-background-color: rgba(37,36,41,1); -fx-background-radius: 30px;");
         setPadding(new Insets(0, 0, 10, 0));
+        setOnMouseClicked(param -> challengesListController.showChallengePane(this.getItem()));
     }
 
     @Override

@@ -9,6 +9,7 @@ import java.util.UUID;
 public class DTOUtils {
     //                          USER
     public static User getFromDTO(UserDTO userDTO) {
+        if (userDTO == null) return null;
         UUID id = userDTO.getId();
         String firstName = userDTO.getFirstName();
         String lastName = userDTO.getLastName();
@@ -20,6 +21,7 @@ public class DTOUtils {
     }
 
     public static UserDTO getDTO(User user) {
+        if (user == null) return null;
         UUID id = user.getId();
         String firstName = user.getFirstName();
         String lastName = user.getLastName();
@@ -47,6 +49,7 @@ public class DTOUtils {
     }
 
     public static Challenge getFromDTO(ChallengeDTO challengeDTO) {
+        if (challengeDTO == null) return null;
         UUID id = challengeDTO.getId();
         String title = challengeDTO.getTitle();
         String text = challengeDTO.getText();
@@ -60,6 +63,7 @@ public class DTOUtils {
     }
 
     public static ChallengeDTO getDTO(Challenge challenge) {
+        if (challenge == null) return null;
         UUID id = challenge.getId();
         String title = challenge.getTitle();
         String text = challenge.getText();
@@ -86,5 +90,11 @@ public class DTOUtils {
             challengeDTOS[i] = getDTO(challenges[i]);
         }
         return challengeDTOS;
+    }
+
+    public static ChallengeUserDTO getDTO(User user, Challenge challenge) {
+        UserDTO userDTO = getDTO(user);
+        ChallengeDTO challengeDTO = getDTO(challenge);
+        return new ChallengeUserDTO(userDTO, challengeDTO);
     }
 }

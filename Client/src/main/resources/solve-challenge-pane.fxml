@@ -71,7 +71,7 @@
             <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
          </padding>
       </Label>
-      <Label text="Attempts left: 5" textFill="WHITE">
+      <Label fx:id="attemptLabel" text="Attempts left: 5" textFill="WHITE">
          <VBox.margin>
             <Insets bottom="20.0" />
          </VBox.margin>
