@@ -15,4 +15,5 @@ public interface Services {
     Challenge getRiddle();
     void addChallenge(Challenge challenge);
     void sendSubmission(Submission submission);
+    ArrayList<Challenge> getAllChallenges();
 }

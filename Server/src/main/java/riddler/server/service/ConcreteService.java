@@ -179,6 +179,7 @@ public class ConcreteService implements Services {
 
         userRepo.update(challengeOwner, challengeOwner.getId());
         challengeRepo.add(challenge);
+        notifyTopUpdate();
     }
 
     @Override
@@ -205,6 +206,11 @@ public class ConcreteService implements Services {
             submissionRepo.add(submission);
             throw new InvalidSubmissionAnswerException("Wrong answer.\n");
         }
+    }
+
+    @Override
+    public ArrayList<Challenge> getAllChallenges() {
+        return new ArrayList<>((Collection<Challenge>) challengeRepo.findChallengesFromUsers());
     }
 
     private boolean solvedChallenge(Submission submission) {

@@ -1,0 +1,35 @@
+@font-face {
+    src: url("fonts/GothamBold.ttf");
+}
+
+.root {
+    /*-fx-background-color: rgba(37,36,41,1);*/
+    -fx-background-color: linear-gradient(to top, rgba(37,36,41,1) 20%, rgba(91,91,107,1) 80%, rgb(97, 166, 100) 100%);
+    -fx-background-radius: 30px;
+}
+
+.title {
+    -fx-text-fill: white;
+    -fx-font-family: Gotham, sans-serif;
+    -fx-font-size: 50px;
+}
+
+.challenges-list {
+    -fx-background-color:  rgba(37,36,41,1);
+    -fx-background-radius: 30px;
+}
+
+.hbox-root {
+    -fx-background-color: #121212;
+    -fx-background-radius: 10px;
+}
+
+.ch-text {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-family: Gotham, sans-serif;
+}
+
+.ch-icon {
+    -fx-icon-color: rgb(56, 171, 59);
+}

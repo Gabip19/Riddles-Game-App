@@ -8,5 +8,6 @@ public enum RequestType {
     GET_RIDDLE,
     GET_TOP_USERS,
     ADD_CHALLENGE,
-    SEND_SUBMISSION
+    SEND_SUBMISSION,
+    GET_CHALLENGES
 }

@@ -1,6 +1,5 @@
 package riddler.client.gui;
 
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -8,20 +7,17 @@ import javafx.scene.layout.HBox;
 import java.io.IOException;
 import java.net.URL;
 
-public class TopUserCell extends HBox {
-    @FXML
-    public Label rankLabel;
-    @FXML
-    public Label nameLabel;
-    @FXML
-    public Label badgesLabel;
-    @FXML
-    public Label tokensLabel;
+public class ChallengeCell extends HBox {
+
     public HBox root;
+    public Label titleLabel;
+    public Label authorLabel;
+    public Label badgesLabel;
+    public Label tokensLabel;
+    public Label tokensPrizeLabel;
+    public static final URL fxmlLocation = TopUserCell.class.getResource("/challenge-view.fxml");
 
-    public static final URL fxmlLocation = TopUserCell.class.getResource("/top-user-cell.fxml");
-
-    public TopUserCell() {
+    public ChallengeCell() {
         super();
         FXMLLoader loader = new FXMLLoader(fxmlLocation);
         loader.setController(this);
@@ -32,20 +28,24 @@ public class TopUserCell extends HBox {
         }
     }
 
-    void setRank(String text) {
-        rankLabel.setText(text);
+    void setTitle(String text) {
+        titleLabel.setText(text);
     }
 
-    void setName(String text) {
-        nameLabel.setText(text);
+    void setAuthor(String text) {
+        authorLabel.setText(text);
     }
 
     void setBadges(String text) {
         badgesLabel.setText(text);
     }
 
-    void setTokens(String text) {
+    void setTokensLabel(String text) {
         tokensLabel.setText(text);
+    }
+
+    void setTokensPrizeLabel(String text) {
+        tokensPrizeLabel.setText(text);
     }
 
     public HBox getRoot() {

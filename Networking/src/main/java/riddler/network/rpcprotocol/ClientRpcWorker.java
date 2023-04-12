@@ -5,6 +5,7 @@ import riddler.domain.Challenge;
 import riddler.domain.Submission;
 import riddler.domain.User;
 import riddler.domain.validator.exceptions.*;
+import riddler.network.dto.ChallengeDTO;
 import riddler.network.dto.DTOUtils;
 import riddler.network.dto.UserDTO;
 import riddler.services.ClientObserver;
@@ -59,12 +60,6 @@ public class ClientRpcWorker implements Runnable, ClientObserver {
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
-//            try {
-//                Thread.sleep(3000);
-//            } catch (InterruptedException e) {
-//                System.out.println("Eroare la sleep.");
-//                e.printStackTrace();
-//            }
         }
         try {
             inputStream.close();
@@ -98,7 +93,16 @@ public class ClientRpcWorker implements Runnable, ClientObserver {
         if (request.type() == RequestType.SEND_SUBMISSION) {
             return handleSendSubmission(request);
         }
+        if (request.type() == RequestType.GET_CHALLENGES) {
+            return handleGetChallenges(request);
+        }
         return null;
+    }
+
+    private Response handleGetChallenges(Request request) {
+        List<Challenge> challenges = service.getAllChallenges();
+        ChallengeDTO[] challengesDTO = DTOUtils.getDTO(challenges.toArray(new Challenge[0]));
+        return new Response.Builder().type(ResponseType.GET_CHALLENGES).data(challengesDTO).build();
     }
 
     private Response handleAddChallenge(Request request) {

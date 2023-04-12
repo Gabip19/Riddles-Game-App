@@ -105,6 +105,26 @@ public class ChallengeDBRepository implements ChallengeRepository {
         return result;
     }
 
+    @Override
+    public Iterable<Challenge> findChallengesFromUsers() {
+        List<Challenge> result = new ArrayList<>();
+        Connection con = dbUtils.getConnection();
+        String select = "SELECT * FROM challenges WHERE author_id IS NOT NULL";
+
+        try (PreparedStatement ps = con.prepareStatement(select)) {
+            try (ResultSet resultSet = ps.executeQuery()) {
+                while (resultSet.next()) {
+                    Challenge challenge = getChallenge(resultSet);
+                    result.add(challenge);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error DB " + e);
+        }
+
+        return result;
+    }
+
     private Challenge getChallenge(ResultSet resultSet) throws SQLException {
         Challenge challenge = DbEntityExtractor.extractChallenge(resultSet);
         UUID authorId = resultSet.getObject("author_id", UUID.class);
@@ -114,5 +134,4 @@ public class ChallengeDBRepository implements ChallengeRepository {
         }
         return challenge;
     }
-
 }

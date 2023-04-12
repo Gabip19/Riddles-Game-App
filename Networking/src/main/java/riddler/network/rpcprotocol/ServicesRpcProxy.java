@@ -5,6 +5,7 @@ import riddler.domain.Challenge;
 import riddler.domain.Submission;
 import riddler.domain.User;
 import riddler.domain.validator.exceptions.*;
+import riddler.network.dto.ChallengeDTO;
 import riddler.network.dto.DTOUtils;
 import riddler.network.dto.UserDTO;
 import riddler.services.ClientObserver;
@@ -253,6 +254,27 @@ public class ServicesRpcProxy implements Services {
             String err = response.data().toString();
             throw new RuntimeException(err);
         }
+    }
+
+    @Override
+    public ArrayList<Challenge> getAllChallenges() {
+        Request request = new Request.Builder()
+                .type(RequestType.GET_CHALLENGES)
+                .build();
+        sendRequest(request);
+
+        Response response = readResponse();
+        if (response.type() == ResponseType.GET_CHALLENGES) {
+            ChallengeDTO[] challengeDTOS = (ChallengeDTO[]) response.data();
+            Challenge[] challenges = DTOUtils.getFromDTO(challengeDTOS);
+            return new ArrayList<>(List.of(challenges));
+        } else if (response.type() == ResponseType.ERROR) {
+            closeConnection();
+            String err = response.data().toString();
+            throw new RuntimeException(err);
+        }
+
+        return new ArrayList<>();
     }
 
     private boolean isUpdate(Response response) {

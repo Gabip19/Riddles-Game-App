@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<HBox fx:id="root" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="53.0" prefWidth="624.0" styleClass="hbox-root" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@style/challenge-list.css" />
+    </stylesheets>
+    <Label fx:id="titleLabel" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="200.0" styleClass="ch-text" text="Titlu titlu titlu titlu titlu titlu titlu titlu">
+      <HBox.margin>
+         <Insets left="30.0" />
+      </HBox.margin></Label>
+    <Label fx:id="authorLabel" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="120.0" styleClass="ch-text" text="Firstname autor">
+      <HBox.margin>
+         <Insets left="20.0" />
+      </HBox.margin></Label>
+    <Label fx:id="badgesLabel" graphicTextGap="8.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="55.0" styleClass="ch-text" text="333">
+      <HBox.margin>
+         <Insets left="20.0" />
+      </HBox.margin>
+      <graphic>
+         <FontIcon iconLiteral="fas-medal" iconSize="17" styleClass="ch-icon" />
+      </graphic></Label>
+    <Label fx:id="tokensLabel" graphicTextGap="8.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="60.0" styleClass="ch-text" text="3333">
+      <HBox.margin>
+         <Insets left="20.0" />
+      </HBox.margin>
+      <graphic>
+         <FontIcon iconLiteral="fab-bandcamp" iconSize="17" styleClass="ch-icon" />
+      </graphic></Label>
+    <Label fx:id="tokensPrizeLabel" graphicTextGap="8.0" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="65.0" styleClass="ch-text" text="3333">
+      <HBox.margin>
+         <Insets left="20.0" right="20.0" />
+      </HBox.margin>
+      <graphic>
+         <FontIcon iconLiteral="fas-trophy" iconSize="17" styleClass="ch-icon" />
+      </graphic></Label>
+</HBox>

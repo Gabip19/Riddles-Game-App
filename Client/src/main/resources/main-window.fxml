@@ -23,6 +23,7 @@
                <Insets left="10.0" />
             </HBox.margin>
          </Button>
+         <Button fx:id="showChallengesBtn" mnemonicParsing="false" text="Button" />
       </HBox>
       <BorderPane fx:id="mainBorderPane" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
          <right>

@@ -37,6 +37,8 @@ public class MainWindowController extends GuiController implements ClientObserve
     @FXML
     public Label lastNameLabel;
     @FXML
+    public Button showChallengesBtn;
+    @FXML
     public ListView<User> topUsersListView;
     private final ObservableList<User> topUsers = FXCollections.observableArrayList();
 
@@ -51,6 +53,7 @@ public class MainWindowController extends GuiController implements ClientObserve
     public void initialize() {
         logOutBtn.setOnAction(param -> logout());
         homeBtn.setOnAction(param -> showHomePane());
+        showChallengesBtn.setOnAction(param -> showChallengesPane());
         initializeTopUsersListView();
     }
 
@@ -61,6 +64,17 @@ public class MainWindowController extends GuiController implements ClientObserve
 
     private void showHomePane() {
         mainBorderPane.setCenter(homeRoot);
+    }
+
+    private void showChallengesPane() {
+        FXMLLoader challengesPaneLoader = new FXMLLoader(getClass().getResource("/challenges-list.fxml"));
+        Parent parent;
+        try {
+            parent = challengesPaneLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        mainBorderPane.setCenter(parent);
     }
 
     public void load() {

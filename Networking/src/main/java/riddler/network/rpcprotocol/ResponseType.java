@@ -12,5 +12,6 @@ public enum ResponseType {
     INVALID_SUBMISSION_ANSWER,
     NO_ATTEMPTS_LEFT,
     GET_TOP_USERS,
-    TOP_UPDATE
+    TOP_UPDATE,
+    GET_CHALLENGES
 }
