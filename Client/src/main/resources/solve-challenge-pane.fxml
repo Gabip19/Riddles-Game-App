@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane prefHeight="651.0" prefWidth="825.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="riddler.client.controller.SolveChallengeController">
+<AnchorPane prefHeight="651.0" prefWidth="825.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="riddler.client.controller.SolveChallengeController">
     <stylesheets>
         <URL value="@style/challenge-display.css" />
     </stylesheets>
@@ -38,7 +38,7 @@
                <Insets left="5.0" />
             </padding>
             </Label>
-         <Label graphicTextGap="7.0" styleClass="info-label" text="3">
+         <Label fx:id="badgeLabel" graphicTextGap="7.0" styleClass="info-label" text="3">
             <font>
                <Font size="14.0" />
             </font>
@@ -46,16 +46,24 @@
                <Insets left="30.0" />
             </HBox.margin>
             <graphic>
-               <FontIcon iconColor="#ffc100" iconLiteral="fas-medal" styleClass="top-icon" />
+               <FontIcon iconColor="#38ab3b" iconLiteral="fas-medal" styleClass="top-icon" />
             </graphic>
          </Label>
-         <Label graphicTextGap="7.0" styleClass="info-label" text="500">
+         <Label fx:id="tokenLabel" graphicTextGap="7.0" styleClass="info-label" text="500">
             <HBox.margin>
                <Insets left="30.0" />
             </HBox.margin>
             <graphic>
-               <FontIcon iconColor="#ffc200" iconLiteral="fab-bandcamp" styleClass="top-icon" />
+               <FontIcon iconColor="#38ab3b" iconLiteral="fab-bandcamp" styleClass="top-icon" />
             </graphic>
+         </Label>
+         <Label fx:id="tokenPrizeLabel" graphicTextGap="8.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="76.0" styleClass="info-label" text="3333">
+            <graphic>
+               <FontIcon iconLiteral="fas-trophy" iconSize="17" styleClass="top-icon" />
+            </graphic>
+            <HBox.margin>
+               <Insets left="30.0" />
+            </HBox.margin>
          </Label>
         </HBox>
       <Label fx:id="resultLabel" styleClass="result-label" text="Wrong" textFill="WHITE">
@@ -71,10 +79,13 @@
             <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
          </padding>
       </Label>
-      <Label fx:id="attemptLabel" text="Attempts left: 5" textFill="WHITE">
+      <Label fx:id="attemptLabel" styleClass="attempts" text="Attempts left: 5" textFill="WHITE">
          <VBox.margin>
             <Insets bottom="20.0" />
          </VBox.margin>
+         <font>
+            <Font size="18.0" />
+         </font>
       </Label>
         <TextField fx:id="answerField" promptText="Type your answer here..." styleClass="answer">
          <VBox.margin>

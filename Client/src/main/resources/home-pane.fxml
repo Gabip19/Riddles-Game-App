@@ -1,19 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="riddler.client.controller.HomePaneController">
-   <VBox alignment="CENTER" layoutX="250.0" layoutY="100.0" prefHeight="200.0" prefWidth="100.0" spacing="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<AnchorPane fx:id="root" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="riddler.client.controller.HomePaneController">
+   <stylesheets>
+      <URL value="@style/home.css" />
+   </stylesheets>
+   <VBox alignment="CENTER" layoutX="250.0" layoutY="100.0" prefHeight="200.0" prefWidth="100.0" spacing="30.0" styleClass="main-vbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <Label text="Home">
          <font>
             <Font size="24.0" />
          </font>
+         <styleClass>
+            <String fx:value="title" />
+            <String fx:value="home" />
+         </styleClass>
       </Label>
-      <Button fx:id="createChallengeBtn" mnemonicParsing="false" text="Create a challenge" />
-      <Button fx:id="randomChallengeBtn" mnemonicParsing="false" text="Random riddle" />
+      <Label styleClass="title" text="Welcome" textFill="#38ab3b" />
+      <Button fx:id="createChallengeBtn" mnemonicParsing="false" prefHeight="41.0" prefWidth="184.0" styleClass="launch-btn" text="Create a challenge" />
+      <Button fx:id="randomChallengeBtn" mnemonicParsing="false" prefHeight="41.0" prefWidth="184.0" styleClass="launch-btn" text="Random riddle" />
+      <padding>
+         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+      </padding>
    </VBox>
+   <padding>
+      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+   </padding>
 </AnchorPane>

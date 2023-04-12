@@ -1,5 +1,6 @@
 @font-face {
     src: url("fonts/Montserrat-Regular.ttf");
+    src: url("fonts/GothamBold.ttf");
 }
 
 .anchor {
@@ -13,8 +14,9 @@
 }
 
 .title {
-    -fx-font-size: 45px;
+    -fx-font-size: 50px;
     -fx-text-fill: white;
+    -fx-font-family: Gotham;
 }
 
 .info-label {
@@ -28,7 +30,7 @@
 }
 
 .top-icon {
-    -fx-icon-color: #ffc200;
+    -fx-icon-color: rgb(56, 171, 59);
 }
 
 .text-label {
@@ -62,4 +64,8 @@
     -fx-font-size: 12px;
     -fx-background-color: rgb(67, 72, 67);
     -fx-background-radius: 10px;
+}
+
+.attempts {
+    -fx-font-size: 17px;
 }

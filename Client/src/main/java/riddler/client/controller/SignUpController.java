@@ -91,7 +91,7 @@ public class SignUpController extends GuiController {
             mainController.logout();
         });
 
-        stage.setTitle("Teledon Menu");
+        stage.setTitle("Riddler");
         stage.setScene(scene);
         stage.show();
     }

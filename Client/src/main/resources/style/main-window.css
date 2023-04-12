@@ -51,3 +51,14 @@
     -fx-background-color: rgb(56, 171, 59);
     -fx-background-radius: 10px;
 }
+
+.menu-btn {
+    -fx-background-color: rgb(0, 0, 0, 0);
+    -fx-font-size: 30px;
+    -fx-text-fill: white;
+}
+
+.logo {
+    -fx-font-family: Gotham;
+    -fx-font-size: 40;
+}

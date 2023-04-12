@@ -105,7 +105,7 @@ public class LoginController extends GuiController {
         Stage stage = new Stage();
         stage.setOnCloseRequest(param -> mainController.logout());
 
-        stage.setTitle("Teledon Menu");
+        stage.setTitle("Riddler");
         stage.setScene(scene);
         stage.show();
     }

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="651.0" prefWidth="825.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="riddler.client.controller.CreateChallengeController">
+<AnchorPane prefHeight="651.0" prefWidth="825.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="riddler.client.controller.CreateChallengeController">
    <stylesheets>
       <URL value="@style/create-challenge.css" />
    </stylesheets>

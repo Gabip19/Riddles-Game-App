@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<HBox fx:id="root" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="53.0" prefWidth="624.0" styleClass="hbox-root" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="root" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="53.0" prefWidth="624.0" styleClass="hbox-root" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
     <stylesheets>
         <URL value="@style/challenge-list.css" />
     </stylesheets>

@@ -20,6 +20,9 @@ public class SolveChallengeController extends GuiController {
     public Label resultLabel;
     public Label attemptLabel;
     public Button seeAnswerBtn;
+    public Label badgeLabel;
+    public Label tokenLabel;
+    public Label tokenPrizeLabel;
 
     private Challenge challenge;
 
@@ -46,8 +49,15 @@ public class SolveChallengeController extends GuiController {
         if (author != null) {
             authorLabel.setText(author.getFirstName() + " " + author.getLastName());
         }
+        setLabels();
         updateAttemptsNumberLabel();
         checkIfIsOwner();
+    }
+
+    private void setLabels() {
+        badgeLabel.setText(String.valueOf(challenge.getBadgesPrizePool()));
+        tokenLabel.setText(String.valueOf(challenge.getTokensPrizePool()));
+        tokenPrizeLabel.setText(String.valueOf(challenge.getTokensPrize()));
     }
 
     private void updateAttemptsNumberLabel() {
