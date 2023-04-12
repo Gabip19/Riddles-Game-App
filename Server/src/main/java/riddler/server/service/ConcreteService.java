@@ -233,7 +233,7 @@ public class ConcreteService implements Services {
             if (correctAnswerNoWords > 1 && userAnswer.equals(correctAnswer.split(" ")[1])) {
                 return true;
             }
-            return answerNoWords >= (correctAnswerNoWords / 2) && correctAnswer.contains(userAnswer);
+            return answerNoWords >= (correctAnswerNoWords / 2) && correctAnswer.contains(" " + userAnswer + " ");
         }
     }
 

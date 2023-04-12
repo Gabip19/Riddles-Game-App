@@ -93,6 +93,7 @@
          <VBox.margin>
             <Insets bottom="16.0" />
          </VBox.margin></Button>
+      <Button fx:id="seeAnswerBtn" mnemonicParsing="false" prefHeight="24.0" prefWidth="95.0" styleClass="answer-btn" text="See answer" />
     </VBox>
    <padding>
       <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

@@ -35,7 +35,7 @@ public class RpcClientStarter extends Application {
         loginController.setMainController(mainWindowController);
         loginController.setMainWindowRoot(mainWindowRoot);
 
-        stage.setTitle("Teledon Login");
+        stage.setTitle("Login");
         stage.setScene(loginScene);
         stage.show();
     }

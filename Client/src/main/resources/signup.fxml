@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
@@ -11,95 +12,130 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="riddler.client.controller.SignUpController">
-    <VBox alignment="CENTER" layoutX="250.0" layoutY="79.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <Label text="SIGN UP">
-            <font>
-                <Font name="Consolas" size="30.0" />
-            </font>
-            <VBox.margin>
-                <Insets bottom="30.0" top="20.0" />
-            </VBox.margin>
-        </Label>
-        <HBox alignment="CENTER" fillHeight="false" prefHeight="40.0" prefWidth="600.0">
-            <Label prefHeight="27.0" prefWidth="100.0" text="First name:" textOverrun="CLIP" HBox.hgrow="NEVER">
-                <font>
-                    <Font size="18.0" />
-                </font>
-                <HBox.margin>
-                    <Insets right="15.0" />
-                </HBox.margin>
-            </Label>
-            <TextField fx:id="firstNameField" prefWidth="230.0" HBox.hgrow="NEVER">
-                <font>
-                    <Font size="14.0" />
-                </font>
-            </TextField>
-        </HBox>
-        <HBox alignment="CENTER" fillHeight="false" prefHeight="40.0" prefWidth="600.0">
-            <Label prefHeight="27.0" prefWidth="100.0" text="Last name:" textOverrun="CLIP" HBox.hgrow="NEVER">
-                <font>
-                    <Font size="18.0" />
-                </font>
-                <HBox.margin>
-                    <Insets right="15.0" />
-                </HBox.margin>
-            </Label>
-            <TextField fx:id="lastNameField" prefWidth="230.0" HBox.hgrow="NEVER">
-                <font>
-                    <Font size="14.0" />
-                </font>
-            </TextField>
-        </HBox>
-        <HBox alignment="CENTER" fillHeight="false" prefHeight="40.0" prefWidth="600.0">
-            <Label prefWidth="100.0" text="Email:" textOverrun="CLIP" HBox.hgrow="NEVER">
-                <font>
-                    <Font size="18.0" />
-                </font>
-                <HBox.margin>
-                    <Insets right="15.0" />
-                </HBox.margin>
-            </Label>
-            <TextField fx:id="emailField" prefWidth="230.0" HBox.hgrow="NEVER">
-                <font>
-                    <Font size="14.0" />
-                </font>
-            </TextField>
-        </HBox>
-        <HBox alignment="CENTER" fillHeight="false" prefHeight="40.0" prefWidth="600.0">
-            <Label prefWidth="100.0" text="Password:" textOverrun="CLIP" HBox.hgrow="NEVER">
-                <font>
-                    <Font size="18.0" />
-                </font>
-                <HBox.margin>
-                    <Insets right="15.0" />
-                </HBox.margin>
-            </Label>
-            <PasswordField fx:id="passwordField" prefWidth="230.0">
-                <font>
-                    <Font size="14.0" />
-                </font>
-            </PasswordField>
-        </HBox>
-        <Label fx:id="errorLabel" alignment="CENTER" prefHeight="17.0" prefWidth="254.0" textFill="RED" wrapText="true" VBox.vgrow="ALWAYS">
-            <VBox.margin>
-                <Insets bottom="10.0" top="10.0" />
-            </VBox.margin>
-        </Label>
-        <Button fx:id="signUnBtn" mnemonicParsing="false" text="Sign in">
-            <VBox.margin>
-                <Insets top="10.0" />
-            </VBox.margin>
-            <font>
-                <Font size="14.0" />
-            </font>
-        </Button>
-        <HBox alignment="CENTER" prefHeight="34.0" prefWidth="600.0">
-            <VBox.margin>
-                <Insets top="30.0" />
-            </VBox.margin>
-            <Label text="Been here already?" />
-            <Hyperlink fx:id="switchToLoginBtn" text="Sign in!" />
-        </HBox>
-    </VBox>
+<AnchorPane prefHeight="511.0" prefWidth="816.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="riddler.client.controller.SignUpController">
+    <stylesheets>
+        <URL value="@style/authentication.css" />
+    </stylesheets>
+    <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+          <VBox alignment="CENTER" prefHeight="511.0" prefWidth="437.0" styleClass="main-vbox">
+              <Label styleClass="title" text="SIGN UP">
+                  <font>
+                      <Font name="Consolas" size="30.0" />
+                  </font>
+                  <VBox.margin>
+                      <Insets bottom="30.0" top="40.0" />
+                  </VBox.margin>
+              </Label>
+            <VBox prefHeight="312.0" prefWidth="435.0">
+               <children>
+                     <Label maxWidth="1.7976931348623157E308" prefHeight="27.0" prefWidth="100.0" styleClass="text-info" text="First name:" textOverrun="CLIP">
+                         <font>
+                             <Font size="18.0" />
+                         </font>
+                     <VBox.margin>
+                        <Insets left="70.0" right="70.0" />
+                     </VBox.margin>
+                     </Label>
+                     <TextField fx:id="firstNameField" maxWidth="1.7976931348623157E308" prefWidth="230.0" styleClass="input-field">
+                         <font>
+                             <Font size="14.0" />
+                         </font>
+                     <VBox.margin>
+                        <Insets left="70.0" right="70.0" top="5.0" />
+                     </VBox.margin>
+                     </TextField>
+                     <Label maxWidth="1.7976931348623157E308" prefHeight="27.0" prefWidth="100.0" styleClass="text-info" text="Last name:" textOverrun="CLIP">
+                         <font>
+                             <Font size="18.0" />
+                         </font>
+                     <VBox.margin>
+                        <Insets left="70.0" right="70.0" top="10.0" />
+                     </VBox.margin>
+                     </Label>
+                     <TextField fx:id="lastNameField" maxWidth="1.7976931348623157E308" prefWidth="230.0" styleClass="input-field">
+                         <font>
+                             <Font size="14.0" />
+                         </font>
+                     <VBox.margin>
+                        <Insets left="70.0" right="70.0" top="5.0" />
+                     </VBox.margin>
+                     </TextField>
+                     <Label maxWidth="1.7976931348623157E308" prefWidth="100.0" styleClass="text-info" text="Email:" textOverrun="CLIP">
+                         <font>
+                             <Font size="18.0" />
+                         </font>
+                     <VBox.margin>
+                        <Insets left="70.0" right="70.0" top="10.0" />
+                     </VBox.margin>
+                     </Label>
+                     <TextField fx:id="emailField" maxWidth="1.7976931348623157E308" prefWidth="230.0" styleClass="input-field">
+                         <font>
+                             <Font size="14.0" />
+                         </font>
+                     <VBox.margin>
+                        <Insets left="70.0" right="70.0" top="5.0" />
+                     </VBox.margin>
+                     </TextField>
+                     <Label maxWidth="1.7976931348623157E308" prefWidth="100.0" styleClass="text-info" text="Password:" textOverrun="CLIP">
+                         <font>
+                             <Font size="18.0" />
+                         </font>
+                     <VBox.margin>
+                        <Insets left="70.0" right="70.0" top="10.0" />
+                     </VBox.margin>
+                     </Label>
+                     <PasswordField fx:id="passwordField" maxWidth="1.7976931348623157E308" prefWidth="295.0" styleClass="input-field">
+                         <font>
+                             <Font size="14.0" />
+                         </font>
+                     <VBox.margin>
+                        <Insets left="70.0" right="70.0" top="10.0" />
+                     </VBox.margin>
+                     </PasswordField>
+               </children>
+            </VBox>
+              <Button fx:id="signUnBtn" mnemonicParsing="false" prefHeight="30.0" prefWidth="105.0" styleClass="launch-btn" text="Sign in">
+                  <VBox.margin>
+                      <Insets top="10.0" />
+                  </VBox.margin>
+                  <font>
+                      <Font size="14.0" />
+                  </font>
+              </Button>
+              <HBox alignment="CENTER" prefHeight="34.0" prefWidth="600.0">
+                  <VBox.margin>
+                      <Insets top="30.0" />
+                  </VBox.margin>
+                  <Label styleClass="little-info" text="Been here already?" textFill="WHITE">
+                  <HBox.margin>
+                     <Insets bottom="20.0" />
+                  </HBox.margin></Label>
+                  <Hyperlink fx:id="switchToLoginBtn" styleClass="little-info" text="Sign in!" textFill="#38ab3b">
+                  <HBox.margin>
+                     <Insets bottom="20.0" />
+                  </HBox.margin></Hyperlink>
+              </HBox>
+          </VBox>
+         <VBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="511.0" prefWidth="383.0">
+            <children>
+               <Label styleClass="logo" text="Riddle" textFill="#38ab3b">
+                  <font>
+                     <Font size="24.0" />
+                  </font>
+               </Label>
+               <Label styleClass="logo" text="me this?" textFill="WHITE">
+                  <VBox.margin>
+                     <Insets left="45.0" top="10.0" />
+                  </VBox.margin>
+               </Label>
+                 <Label fx:id="errorLabel" alignment="CENTER" prefHeight="17.0" prefWidth="254.0" styleClass="error-label" textFill="RED" wrapText="true" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                         <Insets bottom="10.0" top="40.0" />
+                     </VBox.margin>
+                 </Label>
+            </children>
+         </VBox>
+      </children>
+   </HBox>
 </AnchorPane>

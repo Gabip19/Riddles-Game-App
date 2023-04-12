@@ -56,3 +56,10 @@
     /*-fx-border-radius: 10px;*/
     /*-fx-border-width: 5px;*/
 }
+
+.answer-btn {
+    -fx-text-fill: #949494;
+    -fx-font-size: 12px;
+    -fx-background-color: rgb(67, 72, 67);
+    -fx-background-radius: 10px;
+}

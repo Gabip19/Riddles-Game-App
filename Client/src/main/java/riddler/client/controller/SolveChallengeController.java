@@ -19,11 +19,18 @@ public class SolveChallengeController extends GuiController {
     public Button submitBtn;
     public Label resultLabel;
     public Label attemptLabel;
+    public Button seeAnswerBtn;
 
     private Challenge challenge;
 
     public void initialize() {
         submitBtn.setOnAction(param -> submit());
+        seeAnswerBtn.setOnAction(param -> showAnswer());
+    }
+
+    private void showAnswer() {
+        attemptLabel.setText(challenge.getAnswer());
+        blockInput();
     }
 
     public void setChallenge(Challenge challenge) {
